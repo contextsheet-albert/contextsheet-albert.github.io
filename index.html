@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContextSheet - AI for Google Sheets</title>
+    <meta name="description" content="ContextSheet brings the power of large language models (Gemini, Claude, ChatGPT) and Google Drive context directly into your Google Sheets.">
+    <style>
+        /* Simple Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #ffffff;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #1a73e8; /* Google Blue */
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #5f6368; /* Google Grey */
+            font-weight: 500;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #1a73e8;
+            border-bottom-color: #1a73e8;
+        }
+
+        /* Main Content Sections */
+        main section {
+            background-color: #ffffff;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        main section h1, main section h2 {
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+        main section h2 {
+            margin-top: 25px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
+        main section p {
+            margin-bottom: 15px;
+        }
+
+        main section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        main section li {
+            margin-bottom: 8px;
+        }
+
+        /* Buttons */
+        .button {
+            display: inline-block;
+            background-color: #1a73e8;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px; /* Add margin for stacking */
+        }
+        .button:hover {
+            background-color: #185abc;
+        }
+        .button.secondary {
+            background-color: #e8f0fe; /* Light Google Blue */
+            color: #1a73e8;
+        }
+        .button.secondary:hover {
+            background-color: #d2e3fc;
+        }
+
+        /* Placeholders */
+        .placeholder-image {
+            background-color: #e0e0e0;
+            border: 1px dashed #ccc;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            width: 100%;
+            height: 300px; /* Adjust as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #5f6368;
+            border-top: 1px solid #e0e0e0;
+            background-color: #f1f3f4;
+        }
+        footer a {
+             color: #1a73e8;
+             text-decoration: none;
+        }
+        footer a:hover {
+             text-decoration: underline;
+        }
+
+
+        /* Utility */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            nav ul {
+                justify-content: center;
+                width: 100%;
+            }
+            .container {
+                padding: 15px;
+            }
+            main section {
+                padding: 20px;
+            }
+            .button {
+                display: block;
+                text-align: center;
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo" onclick="showPage('home-content'); return false;">ContextSheet</a>
+            <ul>
+                <li><a href="#" id="nav-home" class="nav-link active" onclick="showPage('home-content'); return false;">Home</a></li>
+                <li><a href="#" id="nav-about" class="nav-link" onclick="showPage('about-content'); return false;">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Page Content -->
+        <section id="home-content">
+            <h1>AI-Powered Answers, Right in Your Google Sheets</h1>
+            <p>
+                ContextSheet is a Google Sheets™ Add-on that connects your spreadsheets to powerful Large Language Models (LLMs) like Google Gemini, Anthropic Claude, and OpenAI ChatGPT.
+                Leverage your data and even documents from Google Drive™ to get contextual answers and insights without ever leaving your sheet.
+            </p>
+
+            <div class="placeholder-image">
+                [Screenshot/GIF of ContextSheet in action will go here]
+            </div>
+
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Connect to Leading LLMs:</strong> Seamlessly switch between Google Gemini (Flash, Pro), Anthropic Claude (Haiku, Sonnet - Direct & Bedrock), and OpenAI ChatGPT (GPT-4o mini, GPT-4.1).</li>
+                <li><strong>Google Drive Context:</strong> Use specific Google Drive files (Docs, Sheets, Slides, PDFs) or entire folders as context for your AI queries.</li>
+                <li><strong>Intelligent Search:</strong> ContextSheet ranks potential context documents based on keyword relevance, recency preferences, and query analysis.</li>
+                <li><strong>Cell-Based Processing:</strong> Run AI queries on data directly from selected cells or ranges.</li>
+                <li><strong>Customizable AI Behavior:</strong> Fine-tune how ContextSheet retrieves and uses context (Snippets vs. Full Docs, Title vs. Content focus).</li>
+                <li><strong>Direct Insertion:</strong> Insert AI-generated answers back into your spreadsheet cells or columns.</li>
+                <li><strong>Sidebar Interface:</strong> Manage API keys, context settings, and run queries easily through the integrated sidebar.</li>
+            </ul>
+
+            <h2>Get Started</h2>
+            <p>Install ContextSheet and start automating your data analysis and information retrieval workflows.</p>
+            <a href="[YOUR_GOOGLE_WORKSPACE_MARKETPLACE_LINK_HERE]" target="_blank" rel="noopener noreferrer" class="button">Install from Marketplace</a>
+            <a href="https://github.com/[YOUR_GITHUB_USERNAME]/[YOUR_REPOSITORY_NAME]" target="_blank" rel="noopener noreferrer" class="button secondary">View on GitHub</a>
+            <p><small>Note: ContextSheet requires API keys for the respective AI services (Gemini, Claude, OpenAI). API usage costs are billed directly by the AI providers.</small></p>
+        </section>
+
+        <!-- About Me Page Content -->
+        <section id="about-content" class="hidden">
+            <h1>About ContextSheet</h1>
+            <p>Hi there! I'm [Your Name/Alias], the creator of ContextSheet.</p>
+            <p>
+                I built ContextSheet because I wanted a seamless way to integrate the reasoning power of modern LLMs directly into my Google Sheets workflows. Manually copying data between spreadsheets and AI chat interfaces, especially when needing context from Drive documents, felt inefficient.
+            </p>
+            <p>
+                This add-on aims to bridge that gap, leveraging Google Apps Script to connect Sheets, Drive, and various LLM APIs (Gemini, Claude via Anthropic/Bedrock, and OpenAI). It incorporates features like document ranking and context management to provide more relevant answers directly within the spreadsheet environment.
+            </p>
+            <h2>Open Source</h2>
+            <p>
+                ContextSheet is an open-source project. You can find the source code, report issues, or contribute on GitHub.
+            </p>
+             <a href="https://github.com/[YOUR_GITHUB_USERNAME]/[YOUR_REPOSITORY_NAME]" target="_blank" rel="noopener noreferrer" class="button secondary">ContextSheet on GitHub</a>
+
+             <h2>Connect</h2>
+             <p>Feel free to connect with me:</p>
+             <ul>
+                <li><strong>GitHub:</strong> <a href="https://github.com/[YOUR_GITHUB_USERNAME]" target="_blank" rel="noopener noreferrer">@[YOUR_GITHUB_USERNAME]</a></li>
+                <li><strong>LinkedIn:</strong> <a href="[YOUR_LINKEDIN_URL_HERE]" target="_blank" rel="noopener noreferrer">Your Name</a> (Optional)</li>
+                <li><strong>Website:</strong> <a href="[YOUR_PERSONAL_WEBSITE_URL_HERE]" target="_blank" rel="noopener noreferrer">yourwebsite.com</a> (Optional)</li>
+             </ul>
+
+             <h2>Disclaimer</h2>
+             <p>
+                ContextSheet interacts with third-party AI services. You are responsible for managing your own API keys and any associated costs incurred from using these services (Google Gemini, Anthropic Claude, OpenAI ChatGPT). Please review the terms and pricing of each service provider.
+             </p>
+        </section>
+    </main>
+
+    <footer>
+        © <span id="copyright-year"></span> [Your Name/Alias or ContextSheet]. All Rights Reserved. |
+        <a href="https://github.com/[YOUR_GITHUB_USERNAME]/[YOUR_REPOSITORY_NAME]" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+    </footer>
+
+    <script>
+        // Simple SPA Logic
+        const pages = ['home-content', 'about-content'];
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function showPage(pageIdToShow) {
+            // Hide all pages
+            pages.forEach(pageId => {
+                const pageElement = document.getElementById(pageId);
+                if (pageElement) { // Check if element exists
+                    pageElement.classList.add('hidden');
+                }
+            });
+
+            // Show the target page
+            const targetPage = document.getElementById(pageIdToShow);
+            if (targetPage) { // Check if element exists
+                targetPage.classList.remove('hidden');
+            }
+
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                // Check if link's target matches the pageIdToShow
+                // Simple check based on ID convention (nav-home -> home-content)
+                if (link.id === `nav-${pageIdToShow.split('-')[0]}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Scroll to top when changing pages
+            window.scrollTo(0, 0);
+        }
+
+        // Set current year in footer
+        const yearSpan = document.getElementById('copyright-year');
+        if (yearSpan) { // Check if element exists
+            yearSpan.textContent = new Date().getFullYear();
+        }
+
+
+        // Initial setup: Show the home page by default
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home-content');
+        });
+    </script>
+</body>
+</html>
