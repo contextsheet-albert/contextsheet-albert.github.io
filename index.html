@@ -447,64 +447,49 @@
         display: none;
       }
 
-      /* Responsive */
-      @media (max-width: 768px) {
-        body {
-          padding-top: 100px; /* Adjust for potentially taller header */
-        }
-        nav {
-          flex-direction: column;
-          height: auto; /* Auto height */
-          padding: 10px 20px;
-        }
-        .nav-center {
-          position: static; /* Remove absolute positioning */
-          transform: none;
-          margin-bottom: 10px; /* Space below title */
-          order: -1; /* Place title first */
-          font-size: 1.6em;
-        }
-        .nav-left {
-          width: 100%;
-          display: flex;
-          justify-content: center; /* Center nav links */
-        }
-        .nav-left ul {
-          padding: 0;
-          gap: 20px;
-        }
-
-        .split-showcase {
-          flex-direction: column;
-          gap: 30px;
-        }
-        .showcase-left .media {
-          max-height: 250px; /* Adjust height for smaller screens */
-        }
+      /* How it Works Section */
+      .how-it-works {
+        margin-top: 60px; /* Similar spacing to upcoming features */
+        padding: 30px 0;
+        text-align: center;
+        border-top: 1px solid #eee; /* Add separator */
       }
 
-      @media (max-width: 480px) {
-        body {
-          font-size: 15px; /* Slightly smaller base font */
-        }
-        .nav-center {
-          font-size: 1.4em;
-        }
-        .nav-left a {
-          font-size: 0.9em;
-        }
-        #home-content h1 {
-          font-size: 1.3em;
-        }
-        #home-content > p {
-          font-size: 1em;
-        }
-        #about-content h1 {
-          font-size: 1.6em;
-        }
-        #about-content h2 {
-          font-size: 1.2em;
-        }
+      .how-it-works h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        font-size: 1.5em;
+        margin-bottom: 25px; /* Increased spacing */
+        color: #444;
+      }
+
+      .how-it-works .steps-list {
+        list-style: none;
+        padding: 0;
+        display: inline-flex; /* Or flex with column direction on small screens */
+        flex-wrap: wrap; /* Allow wrapping */
+        gap: 20px 30px; /* Row and column gap */
+        justify-content: center;
+        max-width: 900px; /* Adjust width as needed */
+        margin: 0 auto;
+      }
+
+      .how-it-works .steps-list li {
+        font-size: 1em;
+        color: #555;
+        display: flex; /* Align icon and text */
+        align-items: center;
+        gap: 10px; /* Space between icon and text */
+        text-align: left; /* Align text left within the flex item */
+        min-width: 200px; /* Give items some minimum width */
+        flex-basis: calc(
+          50% - 15px
+        ); /* Try to fit two per row, adjusting for gap */
+      }
+
+      .how-it-works .steps-list li span {
+        font-size: 1.5em; /* Make emoji larger */
+        flex-shrink: 0; /* Prevent emoji from shrinking */
       }
 
       /* Static Upcoming Features Section */
@@ -585,6 +570,87 @@
       /* Ensure buttons within about section maintain button text color */
       #about-content a.button {
         color: #ffffff; /* Override general link color for buttons */
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        body {
+          padding-top: 100px; /* Adjust for potentially taller header */
+        }
+        nav {
+          flex-direction: column;
+          height: auto; /* Auto height */
+          padding: 10px 20px;
+        }
+        .nav-center {
+          position: static; /* Remove absolute positioning */
+          transform: none;
+          margin-bottom: 10px; /* Space below title */
+          order: -1; /* Place title first */
+          font-size: 1.6em;
+        }
+        .nav-left {
+          width: 100%;
+          display: flex;
+          justify-content: center; /* Center nav links */
+        }
+        .nav-left ul {
+          padding: 0;
+          gap: 20px;
+        }
+
+        .split-showcase {
+          flex-direction: column;
+          gap: 30px;
+        }
+        .showcase-left .media {
+          max-height: 250px; /* Adjust height for smaller screens */
+        }
+
+        /* Responsive adjustments for How it Works */
+        .how-it-works .steps-list {
+          flex-direction: column; /* Stack steps vertically */
+          align-items: center; /* Center items when stacked */
+          gap: 15px; /* Adjust gap for column layout */
+        }
+        .how-it-works .steps-list li {
+          flex-basis: auto; /* Reset basis */
+          width: 80%; /* Adjust width */
+          max-width: 400px; /* Max width for readability */
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          font-size: 15px; /* Slightly smaller base font */
+        }
+        .nav-center {
+          font-size: 1.4em;
+        }
+        .nav-left a {
+          font-size: 0.9em;
+        }
+        #home-content h1 {
+          font-size: 1.3em;
+        }
+        #home-content > p {
+          font-size: 1em;
+        }
+        #about-content h1 {
+          font-size: 1.6em;
+        }
+        #about-content h2 {
+          font-size: 1.2em;
+        }
+
+        /* How it Works on smallest screens */
+        .how-it-works .steps-list li {
+          width: 95%; /* Take more width on very small screens */
+          font-size: 0.95em;
+        }
+        .how-it-works .steps-list li span {
+          font-size: 1.4em;
+        }
       }
     </style>
   </head>
@@ -700,6 +766,17 @@
             </div>
             <a class="caption">Main Interface</a>
           </div>
+        </div>
+
+        <!-- How it Works Section -->
+        <div class="how-it-works">
+          <h2>How it Works (4 Simple Steps)</h2>
+          <ol class="steps-list">
+            <li><span>🔗</span> 1. Insert URL to Drive folder / file for context.</li>
+            <li><span>⏳</span> 3. Wait.</li>
+            <li><span>❓</span> 2. Select cells and ask a question about them.</li>
+            <li><span>🥳</span> 4. Check responses and insert into your sheet.</li>
+          </ol>
         </div>
 
         <!-- Static Upcoming Features Section -->
@@ -841,7 +918,8 @@
         <!-- Moved Get Started Here -->
         <h2>Get Started</h2>
         <p>
-          Install ContextSheet and start automating your information retrieval workflows.
+          Install ContextSheet and start automating your information retrieval
+          workflows.
         </p>
         <a
           href="[YOUR_GOOGLE_WORKSPACE_MARKETPLACE_LINK_HERE]"
