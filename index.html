@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ContextSheet - AI for Google Sheets</title>
+    <meta
+      name="description"
+      content="ContextSheet brings the power of large language models (Gemini, Claude, ChatGPT) and Google Drive context directly into your Google Sheets."
+    />
+    <link rel="icon" href="images/logo_small.png" type="image/png" />
+    <style>
+      /* Reset & Base */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif for body */
+        line-height: 1.6;
+        color: #333;
+        background-color: #ffffff; /* White background */
+        padding-top: 80px; /* Space for fixed header */
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1100px; /* Wider container for grid */
+        margin: 20px auto; /* Add top margin */
+        padding: 0 20px; /* Padding on sides */
+        flex-grow: 1;
+        width: 100%;
+      }
+
+      /* Header */
+      header {
+        background-color: #ffffff;
+        border-bottom: 1px solid #eee;
+        position: fixed; /* Fixed header */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 15px 0;
+      }
+
+      nav {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px; /* Fixed height for alignment */
+      }
+
+      .nav-left ul {
+        list-style: none;
+        display: flex;
+        gap: 25px; /* Increased gap */
+      }
+
+      .nav-left a {
+        text-decoration: none;
+        color: #555;
+        font-size: 0.95em;
+        letter-spacing: 0.5px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s ease, border-color 0.2s ease;
+      }
+
+      .nav-left a:hover,
+      .nav-left a.active {
+        color: #000;
+        border-bottom-color: #aaa;
+      }
+
+      .nav-center {
+        font-family: "Times New Roman", Times, serif; /* Serif font for title */
+        color: #222;
+        position: absolute; /* Center absolutely */
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%; /* Take full nav height */
+        display: flex; /* Use flex to center image */
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-center a {
+        /* Style the link containing the image */
+        color: inherit;
+        text-decoration: none;
+        height: 80%; /* Increased from 60% to make logo larger */
+        display: flex; /* Align image within link */
+        align-items: center;
+      }
+      .nav-center img {
+        height: 100%; /* Make image fill link height */
+        width: auto; /* Maintain aspect ratio */
+      }
+
+      /* Main Content Sections */
+      main section {
+        padding: 20px 0; /* Padding top/bottom */
+      }
+
+      /* Home Page Specifics */
+      #home-content h1 {
+        text-align: center;
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        font-size: 1.5em;
+        margin-bottom: 30px;
+        color: #444;
+      }
+      #home-content > p {
+        /* Style the intro paragraph */
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 40px auto; /* Center block and add bottom margin */
+        color: #555;
+        font-size: 1.05em;
+      }
+
+      /* Split Showcase (Replaces Media Carousel) */
+      .split-showcase {
+        display: flex;
+        gap: 30px; /* Gap between video and images */
+        margin: 0 auto 40px auto;
+        max-width: 1100px; /* Adjust max-width if needed */
+        align-items: center;
+      }
+
+      .showcase-left,
+      .showcase-right {
+        position: relative; /* Needed for captions/arrows */
+        height: 450px; /* <<<<< TRY SETTING EXPLICIT HEIGHT for alignment */
+        display: flex; /* Use flex to align caption below */
+        flex-direction: column;
+      }
+      .showcase-left {
+        flex: 1.5; /* Make left side 1.5 times wider than right */
+      }
+      .showcase-right {
+        flex: 1; /* Right side takes 1 part */
+      }
+
+      .showcase-left .media-container, /* Added wrapper */
+      .showcase-right .image-carousel-container {
+        flex-grow: 1; /* Allow container to fill height */
+        width: 100%;
+        position: relative; /* Needed for positioning content/arrows */
+        overflow: hidden; /* Needed for carousel mask */
+        display: flex; /* Center content vertically */
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px; /* Space for caption */
+      }
+
+      .showcase-left .media,
+      .showcase-right .media-item .media {
+        /* Target image within item */
+        display: block;
+        max-width: 100%;
+        max-height: 100%; /* Fill the container height */
+        height: auto; /* Maintain aspect ratio if width constrained */
+        width: auto; /* Maintain aspect ratio if height constrained */
+        border: 1px solid #eee;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      }
+      .showcase-left video.media {
+        background-color: #f0f0f0;
+      }
+
+      .showcase-left .caption,
+      .showcase-right .caption {
+        /* Caption below the carousel container */
+        font-family: "Times New Roman", Times, serif;
+        font-size: 1em;
+        color: #444;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        text-align: center;
+        width: 100%;
+        flex-shrink: 0; /* Prevent caption from shrinking */
+      }
+
+      /* Image Carousel specific styles within showcase-right */
+      .image-carousel-container {
+        /* Styles moved above */
+      }
+
+      .image-track {
+        display: flex;
+        align-items: center; /* Vertically center items in track */
+        height: 100%;
+        position: absolute; /* Allow positioning via transform */
+        left: 0; /* Start track at the left */
+        transition: transform 0.6s ease-in-out;
+        will-change: transform; /* Optimize animation */
+      }
+
+      .image-track .media-item {
+        /* Removed absolute positioning */
+        width: 250px; /* <<<<< SET NARROWER FIXED WIDTH for items */
+        height: 90%; /* Make item slightly smaller than track height */
+        flex-shrink: 0; /* Prevent items from shrinking */
+        margin: 0 5px; /* Reduced horizontal spacing between items */
+        opacity: 0.4; /* Default faded look */
+        transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+        display: flex;
+        flex-direction: column; /* Keep media/caption stacked */
+        justify-content: center;
+        align-items: center;
+        position: relative; /* For absolute positioning caption inside */
+        transform: scale(1); /* Default scale */
+      }
+
+      .image-track .media-item.active {
+        opacity: 1;
+        /* visibility: visible; - Not needed with opacity */
+        /* z-index: 1; - Not needed with transform */
+        transform: scale(1.05); /* Slightly scale up active item */
+      }
+
+      /* Adjust media height within the right carousel */
+      .image-track .media-item .media {
+        max-height: 100%; /* Media fills item height */
+        /* No bottom margin needed as caption is positioned absolutely */
+        margin-bottom: 0;
+      }
+
+      /* Adjust caption position within right carousel items */
+      .image-track .media-item .caption {
+        /* This caption is not used anymore, main caption is below container */
+        display: none;
+      }
+
+      /* Main caption below carousel */
+      .showcase-right a.caption {
+        /* Style the caption link */
+        /* Styles defined earlier */
+        margin-top: 0; /* Remove potential top margin */
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        z-index: 10; /* Ensure it's above arrows */
+      }
+
+      /* Reposition Carousel Navigation Arrows */
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-60%);
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px; /* Slightly smaller arrows */
+        height: 35px;
+        font-size: 18px;
+        cursor: pointer;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+        /* Position relative to showcase-right which is the flex item */
+      }
+      .carousel-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      /* Position arrows relative to showcase-right */
+      .showcase-right .image-carousel-container .carousel-btn.prev-btn {
+        left: 20%;
+      }
+      .showcase-right .image-carousel-container .carousel-btn.next-btn {
+        right: 20%;
+      }
+
+      /* About Page Specifics */
+      #about-content {
+        max-width: 800px; /* Narrower content for text */
+        margin: 0 auto; /* Center the about content */
+      }
+
+      #about-content h1,
+      #about-content h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        margin-top: 30px;
+      }
+      #about-content h1 {
+        font-size: 1.8em;
+        text-align: center;
+        border-bottom: none; /* No border for main H1 */
+        margin-bottom: 25px;
+      }
+      #about-content h2 {
+        font-size: 1.4em;
+        margin-top: 40px;
+      }
+
+      #about-content p,
+      #about-content ul {
+        margin-bottom: 15px;
+        color: #555;
+        font-size: 0.95em;
+      }
+      #about-content ul {
+        margin-left: 20px;
+        list-style: disc; /* Use standard bullets */
+      }
+      #about-content li {
+        margin-bottom: 8px;
+      }
+      #about-content strong {
+        color: #111; /* Make strong text darker */
+        font-weight: 600;
+      }
+      #about-content a {
+        /* Style links within about page */
+        color: black; /* Standard link blue */
+        text-decoration: none;
+      }
+      #about-content a:hover {
+        text-decoration: underline;
+      }
+
+      /* About Intro Layout */
+      .about-intro {
+        display: flex;
+        gap: 30px; /* Space between carousel and text */
+        align-items: center; /* Vertically align items */
+        margin-bottom: 25px; /* Space below the intro block */
+      }
+
+      .about-me-carousel {
+        width: 150px; /* Fixed width for the carousel */
+        height: 150px;
+        flex-shrink: 0; /* Prevent carousel from shrinking */
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%; /* Make it circular */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .about-me-carousel .carousel-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.8s ease-in-out; /* Smooth fade */
+      }
+
+      .about-me-carousel .carousel-item.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .about-me-carousel img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure image covers the circle */
+      }
+
+      .about-intro-text {
+        flex-grow: 1; /* Allow text to take remaining space */
+      }
+
+      /* Connect List Icons */
+      #about-content .connect-list li {
+        display: flex;
+        align-items: center; /* Vertically align icon and text */
+        gap: 8px; /* Space between icon and text */
+        margin-bottom: 10px; /* Space between list items */
+      }
+      #about-content .connect-list img.icon {
+        width: 20px; /* Set icon size */
+        height: 20px;
+        flex-shrink: 0; /* Prevent icon from shrinking */
+      }
+
+      /* Buttons (Keep for About page, slightly simplified) */
+      .button {
+        display: inline-block;
+        background-color: #1877f2; /* Brighter Blue */
+        color: #ffffff;
+        padding: 10px 25px; /* Slightly larger padding */
+        text-decoration: none;
+        border-radius: 6px; /* More rounded corners */
+        font-weight: 500; /* Medium weight (or try 600 for bolder) */
+        font-size: 0.95em; /* Slightly larger text */
+        letter-spacing: 0.5px; /* Add slight letter spacing */
+        transition: background-color 0.2s ease;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-top: 10px;
+      }
+      .button:hover {
+        background-color: #166fe5; /* Darker shade of the brighter blue */
+      }
+      .button.secondary {
+        background-color: #f0f0f0; /* Light grey */
+        color: #333;
+        border: 1px solid #ddd;
+      }
+      .button.secondary:hover {
+        background-color: #e0e0e0;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        margin-top: 50px; /* More space above footer */
+        padding: 25px 20px;
+        font-size: 0.85em;
+        color: #888; /* Lighter footer text */
+        border-top: 1px solid #eee;
+        background-color: #ffffff;
+      }
+      footer a {
+        color: #666; /* Slightly darker link */
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Utility */
+      .hidden {
+        display: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        body {
+          padding-top: 100px; /* Adjust for potentially taller header */
+        }
+        nav {
+          flex-direction: column;
+          height: auto; /* Auto height */
+          padding: 10px 20px;
+        }
+        .nav-center {
+          position: static; /* Remove absolute positioning */
+          transform: none;
+          margin-bottom: 10px; /* Space below title */
+          order: -1; /* Place title first */
+          font-size: 1.6em;
+        }
+        .nav-left {
+          width: 100%;
+          display: flex;
+          justify-content: center; /* Center nav links */
+        }
+        .nav-left ul {
+          padding: 0;
+          gap: 20px;
+        }
+
+        .split-showcase {
+          flex-direction: column;
+          gap: 30px;
+        }
+        .showcase-left .media {
+          max-height: 250px; /* Adjust height for smaller screens */
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          font-size: 15px; /* Slightly smaller base font */
+        }
+        .nav-center {
+          font-size: 1.4em;
+        }
+        .nav-left a {
+          font-size: 0.9em;
+        }
+        #home-content h1 {
+          font-size: 1.3em;
+        }
+        #home-content > p {
+          font-size: 1em;
+        }
+        #about-content h1 {
+          font-size: 1.6em;
+        }
+        #about-content h2 {
+          font-size: 1.2em;
+        }
+      }
+
+      /* Static Upcoming Features Section */
+      .upcoming-features-static {
+        margin-top: 60px;
+        padding: 30px 0;
+        border-top: 1px solid #eee;
+        text-align: center;
+      }
+
+      .upcoming-features-static h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        color: #444;
+      }
+
+      .upcoming-features-static ul {
+        list-style: none;
+        padding: 0;
+        display: inline-flex; /* Or inline-block if preferred */
+        flex-wrap: wrap; /* Allow wrapping */
+        gap: 15px 30px; /* Row and column gap */
+        justify-content: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .upcoming-features-static li {
+        font-size: 1em;
+        color: #555;
+      }
+      .upcoming-features-static li i {
+        /* Simple icon styling */
+        margin-right: 8px;
+        font-style: normal; /* Prevent italics if using emoji */
+        /* Add color or size if needed */
+      }
+
+      /* Feature Details Section */
+      .feature-details {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      .feature-details h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        font-size: 1.8em;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .feature-explanation {
+        margin-bottom: 40px;
+        padding-top: 60px; /* Offset for fixed header */
+        margin-top: -60px; /* Negative margin matching padding-top */
+      }
+
+      .feature-explanation h3 {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 500;
+        font-size: 1.4em;
+        color: #444;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      .feature-explanation p {
+        color: #555;
+        line-height: 1.7;
+      }
+
+      /* Ensure buttons within about section maintain button text color */
+      #about-content a.button {
+        color: #ffffff; /* Override general link color for buttons */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-left">
+          <ul>
+            <li>
+              <a
+                href="#"
+                id="nav-home"
+                class="nav-link active"
+                onclick="showPage('home-content'); return false;"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                id="nav-about"
+                class="nav-link"
+                onclick="showPage('about-content'); return false;"
+                >About</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="nav-center">
+          <a href="#" onclick="showPage('home-content'); return false;">
+            <img src="images/logo.png" alt="ContextSheet Logo" />
+          </a>
+        </div>
+        <!-- Right navigation can be added here if needed -->
+      </nav>
+    </header>
+
+    <main class="container">
+      <!-- Home Page Content -->
+      <section id="home-content">
+        <!-- Removed H1 from here, using centered paragraph -->
+        <p>
+          ContextSheet is a Google Sheets™ Add-on connecting spreadsheets to
+          LLMs (Gemini, Claude, ChatGPT) and Google Drive™ for contextual
+          answers.
+        </p>
+
+        <!-- Replaced media-carousel with split-showcase -->
+        <div class="split-showcase">
+          <div class="showcase-left">
+            <div class="media-container">
+              <video controls autoplay muted loop playsinline class="media">
+                <source src="images/video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="caption">Demo Video</div>
+          </div>
+          <div class="showcase-right">
+            <div class="image-carousel-container">
+              <div class="image-track">
+                <div class="media-item active">
+                  <img
+                    src="images/main_page.png"
+                    alt="ContextSheet Main Interface"
+                    class="media"
+                  />
+                </div>
+                <div class="media-item">
+                  <img
+                    src="images/loading_response.png"
+                    alt="ContextSheet Loading Response"
+                    class="media"
+                  />
+                </div>
+                <div class="media-item">
+                  <img
+                    src="images/response.png"
+                    alt="ContextSheet Response Example"
+                    class="media"
+                  />
+                </div>
+                <div class="media-item">
+                  <img
+                    src="images/options.png"
+                    alt="ContextSheet Options"
+                    class="media"
+                  />
+                </div>
+                <div class="media-item">
+                  <img
+                    src="images/advanced_options.png"
+                    alt="ContextSheet Advanced Options"
+                    class="media"
+                  />
+                </div>
+                <div class="media-item">
+                  <img
+                    src="images/settings.png"
+                    alt="ContextSheet Settings Panel"
+                    class="media"
+                  />
+                </div>
+              </div>
+
+              <!-- Navigation Arrows for Image Carousel -->
+              <button class="carousel-btn prev-btn" aria-label="Previous Image">
+                &#10094;
+              </button>
+              <button class="carousel-btn next-btn" aria-label="Next Image">
+                &#10095;
+              </button>
+            </div>
+            <a class="caption">Main Interface</a>
+          </div>
+        </div>
+
+        <!-- Static Upcoming Features Section -->
+        <div class="upcoming-features-static">
+          <h2>Future Roadmap</h2>
+          <ul>
+            <li><i>📄</i> Enhanced PDF Parsing</li>
+            <li><i>🔍</i> OCR Scanning for Images/PDFs</li>
+            <li><i>🔗</i> More LLM Integrations</li>
+            <!-- Add more planned features -->
+          </ul>
+          <p style="margin-top: 20px; font-size: 0.95em">
+            Have suggestions for new features or found a bug? Email me at
+            albert.steenstrup@contextsheet.com
+          </p>
+        </div>
+
+        <!-- Feature Details Section -->
+        <div class="feature-details">
+          <h2>Feature Explanations</h2>
+
+          <div id="details-main-interface" class="feature-explanation">
+            <h3>Main Interface</h3>
+            <p>
+              This shows the primary ContextSheet sidebar view. Here, you can
+              select your preferred AI model (like Gemini, Claude, or ChatGPT)
+              from the dropdown, manage the API keys for each service via the
+              tabs, and set the core context source using a Google Drive file or
+              folder URL. Buttons for accessing Options and Advanced Settings
+              are also visible.
+            </p>
+            <!-- Add more detail -->
+          </div>
+
+          <div id="details-loading-response" class="feature-explanation">
+            <h3>Loading Response</h3>
+            <p>
+              While processing your queries, the sidebar shows a loading state.
+              It indicates how many non-empty cells were found in your selection
+              and displays placeholders while preparing context and fetching
+              answers from the AI model for each query.
+            </p>
+            <!-- Add more detail -->
+          </div>
+
+          <div id="details-example-response" class="feature-explanation">
+            <h3>Example Response</h3>
+            <p>
+              Here's how ContextSheet displays results after processing queries.
+              Each card corresponds to a cell query (e.g., "Age of Alice"). It
+              shows the relevant text snippet extracted from the context
+              document (if enabled in options), along with the final answer
+              generated by the AI. You can select results to insert back into
+              your sheet.
+            </p>
+            <!-- Add more detail -->
+          </div>
+
+          <div id="details-options" class="feature-explanation">
+            <h3>Options</h3>
+            <p>
+              The Options panel allows basic configuration. You can set the
+              required Google Drive URL for context, toggle whether to include
+              the context snippet in the result display, and choose whether to
+              list the context documents used when inserting answers back into
+              the sheet. Access to Advanced Settings is also provided.
+            </p>
+            <!-- Add more detail -->
+          </div>
+
+          <div id="details-advanced-options" class="feature-explanation">
+            <h3>Advanced Options</h3>
+            <p>
+              Dive deeper into customization with Advanced Settings. Control the
+              preference for recent files when ranking search results. Adjust
+              the Search Focus slider to prioritize document titles versus their
+              full content. Modify the Context Strategy slider to favour finding
+              answers in smaller text snippets versus reflecting upon whole
+              documents. An upcoming PDF OCR feature is also hinted;)
+            </p>
+            <!-- Add more detail -->
+          </div>
+
+          <div id="details-settings-panel" class="feature-explanation">
+            <h3>Settings Panel</h3>
+            <p>
+              The main Settings panel is the hub for core configuration. Select
+              the AI model (LLM) you want to use from the dropdown menu. Use the
+              tabs (Gemini, Claude, ChatGPT) to securely enter and manage your
+              API keys for each respective service. Direct links to obtain keys
+              and manage settings are provided here as well.
+            </p>
+            <!-- Add more detail -->
+          </div>
+        </div>
+      </section>
+
+      <!-- About Page Content -->
+      <section id="about-content" class="hidden">
+        <h1>About ContextSheet</h1>
+        <div class="about-intro">
+          <div class="about-me-carousel">
+            <div class="carousel-item active">
+              <img src="images/me1.png" alt="About Me Image 1" />
+            </div>
+            <div class="carousel-item">
+              <img src="images/me2.png" alt="About Me Image 2" />
+            </div>
+            <div class="carousel-item">
+              <img src="images/me3.png" alt="About Me Image 3" />
+            </div>
+          </div>
+          <div class="about-intro-text">
+            <p>Hi! I'm Albert, I created ContextSheet.</p>
+          </div>
+        </div>
+        <p>
+          I built ContextSheet because I wanted a seamless way to integrate the
+          reasoning power of modern LLMs directly into my Google Sheets
+          workflows. Manually copying data between spreadsheets and AI chat
+          interfaces, especially when needing context from Drive documents, felt
+          inefficient.
+        </p>
+        <p>
+          This add-on aims to bridge that gap, leveraging Google Apps Script to
+          connect Sheets, Drive, and various LLM APIs (Gemini, Claude via
+          Anthropic/Bedrock, and OpenAI). It incorporates features like document
+          ranking and context management to provide more relevant answers
+          directly within the spreadsheet environment.
+        </p>
+        <p>
+          Privacy has been priority number one, with all user data kept in your
+          own Google environment / LLM endpoints. No data is shared with third
+          parties, nor is any data stored on my servers. Besides Google
+          libraries, no other libraries are used outside the call for the LLM
+          APIs chosen by the user.
+        </p>
+
+        <!-- Moved Get Started Here -->
+        <h2>Get Started</h2>
+        <p>
+          Install ContextSheet and start automating your information retrieval workflows.
+        </p>
+        <a
+          href="[YOUR_GOOGLE_WORKSPACE_MARKETPLACE_LINK_HERE]"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button"
+          >Get started</a
+        >
+
+        <p>
+          <small
+            >Note: ContextSheet requires API keys for the respective AI services
+            (Gemini, Claude, OpenAI). API usage costs are billed directly by the
+            AI providers.</small
+          >
+        </p>
+
+        <h2>Connect</h2>
+        <p>Feel free to connect with me:</p>
+        <ul class="connect-list">
+          <li>
+            <img src="images/linkedin.png" alt="LinkedIn Logo" class="icon" />
+            <strong>LinkedIn:</strong>
+            <a
+              href="https://www.linkedin.com/in/albert-steenstrup-a733721b3/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Albert Steenstrup</a
+            >
+          </li>
+          <li>
+            <img src="images/gmail.png" alt="Gmail Logo" class="icon" />
+            <strong>Email:</strong>
+            <a href="mailto:albert.steenstrup@contextsheet.com"
+              >albert.steenstrup@contextsheet.com</a
+            >
+          </li>
+        </ul>
+
+        <h2>Disclaimer</h2>
+        <p>
+          ContextSheet interacts with third-party AI services. You are
+          responsible for managing your own API keys and any associated costs
+          incurred from using these services (Google Gemini, Anthropic Claude,
+          OpenAI ChatGPT). Please review the terms and pricing of each service
+          provider.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="copyright-year"></span> Contextsheet | All rights reserved.
+      <br />
+      Google Sheets™ and Google Drive™ are trademarks of Google LLC. This site
+      is not affiliated with or endorsed by Google.
+    </footer>
+
+    <script>
+      // Simple SPA Logic (Mostly unchanged, removed slideshow parts)
+      const pages = ["home-content", "about-content"];
+      const navLinks = document.querySelectorAll(".nav-link"); // Assuming class '.nav-link' is kept on nav items
+
+      function showPage(pageIdToShow) {
+        pages.forEach((pageId) => {
+          const pageElement = document.getElementById(pageId);
+          if (pageElement) {
+            pageElement.classList.add("hidden");
+          }
+        });
+
+        const targetPage = document.getElementById(pageIdToShow);
+        if (targetPage) {
+          targetPage.classList.remove("hidden");
+        }
+
+        // Update active nav link
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          // More robust check based on the target page ID
+          if (link.id === `nav-${pageIdToShow.split("-")[0]}`) {
+            link.classList.add("active");
+          }
+        });
+
+        window.scrollTo(0, 0); // Scroll to top
+      }
+
+      // Set current year in footer
+      const yearSpan = document.getElementById("copyright-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+
+      // Initial setup: Show the home page by default
+      document.addEventListener("DOMContentLoaded", () => {
+        showPage("home-content");
+        // Add any other initialization if needed
+      });
+
+      // Re-add event listeners for nav links if needed (or ensure onclick works)
+      // Example:
+      // document.getElementById('nav-home').addEventListener('click', (e) => { e.preventDefault(); showPage('home-content'); });
+      // document.getElementById('nav-about').addEventListener('click', (e) => { e.preventDefault(); showPage('about-content'); });
+      // The onclick attributes in the HTML should suffice here.
+
+      // --- Media Carousel Logic (Now targets only images on right) ---
+      const imageCarouselContainer = document.querySelector(
+        ".image-carousel-container"
+      );
+      const imageTrack = imageCarouselContainer?.querySelector(".image-track");
+      const showcaseRightCaptionLink = document.querySelector(
+        ".showcase-right > a.caption"
+      ); // Get the main caption LINK element
+      const imageCaptions = [
+        "Main Interface",
+        "Loading Response",
+        "Example Response",
+        "Options",
+        "Advanced Options",
+        "Settings Panel",
+      ]; // Store captions
+
+      if (imageCarouselContainer && imageTrack) {
+        const items = imageTrack.querySelectorAll(".media-item"); // Select items within the track
+        const prevBtn = imageCarouselContainer.querySelector(".prev-btn"); // Look within the container
+        const nextBtn = imageCarouselContainer.querySelector(".next-btn"); // Look within the container
+        let currentIndex = 0;
+        let intervalId = null;
+        const slideDuration = 10000; // 10 seconds
+
+        // Function to recalculate layout dependent values
+        function calculateLayout() {
+          if (!items || items.length === 0)
+            return { itemWidth: 0, containerWidth: 0 };
+          const itemStyle = window.getComputedStyle(items[0]);
+          const itemWidth =
+            items[0].offsetWidth +
+            parseFloat(itemStyle.marginLeft) +
+            parseFloat(itemStyle.marginRight);
+          const containerWidth = imageCarouselContainer.offsetWidth;
+          return { itemWidth, containerWidth };
+        }
+
+        function showItem(index) {
+          if (!items || items.length === 0) return;
+
+          const { itemWidth, containerWidth } = calculateLayout();
+          if (itemWidth === 0) return; // Avoid division by zero if item width is 0
+
+          // Calculate the translation needed to center the item
+          const offset = containerWidth / 2 - itemWidth / 2;
+          const translateX = -(index * itemWidth) + offset;
+
+          // Apply the transform to the track
+          imageTrack.style.transform = `translateX(${translateX}px)`;
+
+          // Remove active class from all items
+          items.forEach((item) => item.classList.remove("active"));
+
+          // Add active class to the target item
+          items[index].classList.add("active");
+
+          // Update the main caption
+          if (showcaseRightCaptionLink && imageCaptions[index]) {
+            const captionText = imageCaptions[index];
+            showcaseRightCaptionLink.textContent = captionText;
+            // Generate href ID from caption text
+            const hrefId = `details-${captionText
+              .toLowerCase()
+              .replace(/\s+/g, "-")
+              .replace(/[^a-z0-9-]/g, "")}`;
+            showcaseRightCaptionLink.href = `#${hrefId}`;
+          }
+        }
+
+        function nextItem() {
+          currentIndex = (currentIndex + 1) % items.length;
+          showItem(currentIndex);
+          startCarousel(); // Reset timer on manual click
+        }
+
+        function prevItem() {
+          currentIndex = (currentIndex - 1 + items.length) % items.length;
+          showItem(currentIndex);
+          startCarousel(); // Reset timer on manual click
+        }
+
+        function startCarousel() {
+          // Clear existing interval just in case
+          clearInterval(intervalId);
+          // Start new interval
+          intervalId = setInterval(nextItem, slideDuration);
+        }
+
+        // Event Listeners for buttons
+        if (prevBtn && items.length > 1) {
+          // Only add listener if multiple items
+          prevBtn.addEventListener("click", () => {
+            prevItem();
+            startCarousel(); // Reset timer on manual click
+          });
+        }
+        if (nextBtn && items.length > 1) {
+          // Only add listener if multiple items
+          nextBtn.addEventListener("click", () => {
+            nextItem();
+            startCarousel(); // Reset timer on manual click
+          });
+        }
+
+        // Recalculate layout on window resize
+        window.addEventListener("resize", () => showItem(currentIndex));
+
+        // Initialize
+        if (items.length > 1) {
+          // Only start carousel if there's more than one item
+          showItem(currentIndex); // Show initial item
+          startCarousel(); // Start automatic cycling
+        } else if (items.length === 1) {
+          showItem(0); // Show the single item if only one exists
+        }
+      }
+      // --- End Media Carousel Logic ---
+
+      // --- About Me Carousel Logic ---
+      const aboutMeCarousel = document.querySelector(".about-me-carousel");
+      if (aboutMeCarousel) {
+        const aboutMeItems = aboutMeCarousel.querySelectorAll(".carousel-item");
+        let aboutMeCurrentIndex = 0;
+        const aboutMeInterval = 4000; // 4 seconds
+
+        function showNextAboutMeItem() {
+          aboutMeItems[aboutMeCurrentIndex].classList.remove("active");
+          aboutMeCurrentIndex = (aboutMeCurrentIndex + 1) % aboutMeItems.length;
+          aboutMeItems[aboutMeCurrentIndex].classList.add("active");
+        }
+
+        // Start the carousel if there are items
+        if (aboutMeItems.length > 1) {
+          setInterval(showNextAboutMeItem, aboutMeInterval);
+        }
+      }
+      // --- End About Me Carousel Logic ---
+    </script>
+  </body>
+</html>
