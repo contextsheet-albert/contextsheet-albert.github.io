@@ -466,7 +466,7 @@
 
       /* Utility */
       .hidden {
-        display: none;
+        display: none !important; /* Add !important */
       }
 
       /* How it Works Section */
@@ -730,22 +730,10 @@
         <div class="nav-left">
           <ul>
             <li>
-              <a
-                href="#"
-                id="nav-home"
-                class="nav-link active"
-                onclick="showPage('home-content'); return false;"
-                >Home</a
-              >
+              <a href="#" id="nav-home" class="nav-link active">Home</a>
             </li>
             <li>
-              <a
-                href="#"
-                id="nav-about"
-                class="nav-link"
-                onclick="showPage('about-content'); return false;"
-                >About</a
-              >
+              <a href="#" id="nav-about" class="nav-link">About</a>
             </li>
           </ul>
         </div>
@@ -1252,6 +1240,23 @@
         }
       }
       // --- End About Me Carousel Logic ---
+
+      // Replace the existing onclick attribute in your About link with an event listener
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("nav-home")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            showPage("home-content");
+          });
+
+        document
+          .getElementById("nav-about")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            showPage("about-content");
+          });
+      });
     </script>
   </body>
 </html>
