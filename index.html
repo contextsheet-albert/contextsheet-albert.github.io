@@ -127,6 +127,28 @@
         font-size: 1.05em;
       }
 
+      @media (max-width: 768px) {
+        .nav-center img {
+          max-height: 40px;
+          width: auto;
+        }
+      }
+
+      @media (max-width: 768px) {
+        /* logo */
+        .nav-center img {
+          max-height: 40px;
+          width: auto;
+        }
+
+        /* all other images (screenshots, carousel, about‑me, etc) */
+        main img,
+        .about-me-carousel img {
+          max-height: 250px;
+          width: auto;
+        }
+      }
+
       /* Split Showcase (Replaces Media Carousel) */
       .split-showcase {
         display: flex;
@@ -455,6 +477,47 @@
         border-top: 1px solid #eee; /* Add separator */
       }
 
+      @media (max-width: 768px) {
+        #home-content {
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* 1. intro text */
+        #home-content > p {
+          order: 0;
+        }
+
+        /* 2. split showcase (video + carousel) */
+        #home-content > .split-showcase {
+          order: 1;
+        }
+
+        /* 3. feature explanations */
+        #home-content > .feature-details {
+          order: 3;
+        }
+
+        /* 4. how‑it‑works */
+        #home-content > .how-it-works {
+          order: 2;
+        }
+
+        /* 5. roadmap */
+        #home-content > .upcoming-features-static {
+          order: 4;
+        }
+
+        .how-it-works {
+          margin-top: 10px;
+          padding-top: 10px;
+        }
+
+        .split-showcase {
+          margin-bottom: 0px;
+        }
+      }
+
       .how-it-works h2 {
         font-family: "Times New Roman", Times, serif;
         font-weight: normal;
@@ -652,6 +715,13 @@
           font-size: 1.4em;
         }
       }
+
+      @media (max-width: 768px) {
+        .image-carousel-container,
+        .showcase-right .caption {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -775,10 +845,10 @@
             <li>
               <span>🔗</span> 1. Insert URL to Drive folder / file for context.
             </li>
-            <li><span>⏳</span> 3. Wait.</li>
             <li>
               <span>❓</span> 2. Select cells and ask a question about them.
             </li>
+            <li><span>⏳</span> 3. Wait.</li>
             <li>
               <span>🥳</span> 4. Check responses and insert into your sheet.
             </li>
@@ -798,9 +868,13 @@
         <div class="upcoming-features-static">
           <h2>Future Roadmap</h2>
           <ul>
-            <li><i>🖖</i> Split query into multiple chunks (e.g. "age and city Alice" -> "age" query and "city" query for Alice)</li>
-            <li><i>🔍</i> OCR Scanning for Images/PDFs</li>
-            <li><i>🔗</i> More LLM Integrations</li>
+            <li>
+              <i>🖖</i> Save tokens by combining queries using same documents as
+              context
+            </li>
+            <li><i>🔍</i> OCR Scanning for scanned PDFs (Google vision)</li>
+            <li><i>🔗</i> Better sourcing of context in snippets</li>
+            <li><i>🐢</i> Slower answers as a workaround quota limits</li>
             <!-- Add more planned features -->
           </ul>
           <p style="margin-top: 20px; font-size: 0.95em">
