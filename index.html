@@ -971,15 +971,12 @@
           </div>
         </div>
         <p>
-          I built Contextsheet because I wanted a seamless way to integrate the
-          reasoning power of modern LLMs directly into my Google Sheets
-          workflows. Manually copying data between spreadsheets and AI chat
+          I built Contextsheet because manually copying data into spreadsheets from AI chat
           interfaces, especially when needing context from Drive documents, felt
           inefficient.
         </p>
         <p>
-          This add-on aims to bridge that gap, leveraging Google Apps Script to
-          connect Sheets, Drive, and various LLM APIs (Gemini, Claude via
+          This add-on aims to bridge that gap to connect Sheets, Drive, and various LLM APIs (Gemini, Claude via
           Anthropic/Bedrock, and OpenAI). It incorporates features like document
           ranking and context management to provide more relevant answers
           directly within the spreadsheet environment, kinda like RAGs.
@@ -991,7 +988,13 @@
           libraries, no other libraries are used outside the call for the LLM
           APIs chosen by the user.
         </p>
-
+        <p>
+          Some private thoughts on the project as well:
+          <br>
+          The extension is no way near perfect, as both quota limits(if your on free tier like me) and document finding is a bit inconsintent (hence why i created all of the options).
+          I'm also working on a PDF OCR feature, so that you can use scanned PDFs as context as well.
+          All of this is coded without any libraries other than Google Apps Script, which enables a lot of privacy, but decreases the amount of oppertunities for performance improvements (would have loved to incorporate stuff like Langchain or even just a vector DB).
+        </p>
         <!-- Moved Get Started Here -->
         <h2>Get Started</h2>
         <p>
