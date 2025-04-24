@@ -471,189 +471,47 @@
         }
 
         .split-showcase {
-          margin-bottom: 0px;
+          margin-bottom: 20px;
+          padding: 0 10px;
         }
 
         .video-showcase {
-          height: 350px;
+          height: auto;
+          min-height: 250px;
+          max-height: none;
+          margin-bottom: 40px;
         }
 
         .video-carousel-container {
-          height: 300px;
-        }
-
-        .video-track .media-item video {
-          max-height: 280px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .video-showcase {
-          height: 300px;
-        }
-
-        .video-carousel-container {
-          height: 250px;
-        }
-
-        .video-track .media-item video {
-          max-height: 230px;
-        }
-      }
-
-      .how-it-works h2 {
-        font-family: "Times New Roman", Times, serif;
-        font-weight: normal;
-        font-size: 1.5em;
-        margin-bottom: 25px; /* Increased spacing */
-        color: #444;
-      }
-
-      .how-it-works .steps-list {
-        list-style: none;
-        padding: 0;
-        display: inline-flex; /* Or flex with column direction on small screens */
-        flex-wrap: wrap; /* Allow wrapping */
-        gap: 20px 30px; /* Row and column gap */
-        justify-content: center;
-        max-width: 900px; /* Adjust width as needed */
-        margin: 0 auto;
-      }
-
-      .how-it-works .steps-list li {
-        font-size: 1em;
-        color: #555;
-        display: flex; /* Align icon and text */
-        align-items: center;
-        gap: 10px; /* Space between icon and text */
-        text-align: left; /* Align text left within the flex item */
-        min-width: 200px; /* Give items some minimum width */
-        flex-basis: calc(
-          50% - 15px
-        ); /* Try to fit two per row, adjusting for gap */
-      }
-
-      .how-it-works .steps-list li span {
-        font-size: 1.5em; /* Make emoji larger */
-        flex-shrink: 0; /* Prevent emoji from shrinking */
-      }
-
-      /* Static Upcoming Features Section */
-      .upcoming-features-static {
-        margin-top: 60px;
-        padding: 30px 0;
-        border-top: 1px solid #eee;
-        text-align: center;
-      }
-
-      .upcoming-features-static h2 {
-        font-family: "Times New Roman", Times, serif;
-        font-weight: normal;
-        font-size: 1.5em;
-        margin-bottom: 20px;
-        color: #444;
-      }
-
-      .upcoming-features-static ul {
-        list-style: none;
-        padding: 0;
-        display: inline-flex; /* Or inline-block if preferred */
-        flex-wrap: wrap; /* Allow wrapping */
-        gap: 15px 30px; /* Row and column gap */
-        justify-content: center;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .upcoming-features-static li {
-        font-size: 1em;
-        color: #555;
-      }
-      .upcoming-features-static li i {
-        /* Simple icon styling */
-        margin-right: 8px;
-        font-style: normal; /* Prevent italics if using emoji */
-        /* Add color or size if needed */
-      }
-
-      /* Feature Details Section */
-      .feature-details {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-      }
-
-      .feature-details h2 {
-        font-family: "Times New Roman", Times, serif;
-        font-weight: normal;
-        font-size: 1.8em;
-        text-align: center;
-        margin-bottom: 30px;
-        color: #333;
-      }
-
-      .feature-explanation {
-        margin-bottom: 40px;
-        padding-top: 60px; /* Offset for fixed header */
-        margin-top: -60px; /* Negative margin matching padding-top */
-      }
-
-      .feature-explanation h3 {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 1.4em;
-        color: #444;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 5px;
-      }
-
-      .feature-explanation p {
-        color: #555;
-        line-height: 1.7;
-      }
-
-      /* Ensure buttons within about section maintain button text color */
-      #about-content a.button {
-        color: #ffffff; /* Override general link color for buttons */
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        body {
-          padding-top: 100px; /* Adjust for potentially taller header */
-        }
-        nav {
-          flex-direction: column;
-          height: auto; /* Auto height */
-          padding: 10px 20px;
-        }
-        .nav-center {
-          position: static; /* Remove absolute positioning */
-          transform: none;
-          margin-bottom: 10px; /* Space below title */
-          order: -1; /* Place title first */
-          font-size: 1.6em;
-        }
-        .nav-left {
+          height: auto;
+          min-height: 200px;
           width: 100%;
-          display: flex;
-          justify-content: center; /* Center nav links */
-        }
-        .nav-left ul {
-          padding: 0;
-          gap: 20px;
         }
 
-        .split-showcase {
-          flex-direction: column;
-          gap: 30px;
-        }
-        .video-showcase .media {
-          max-height: 250px; /* Adjust height for smaller screens */
+        .video-track .media-item {
+          position: relative;
+          height: auto;
+          min-height: 200px;
         }
 
-        /* Responsive adjustments for How it Works */
+        .video-track .media-item video {
+          width: 100%;
+          height: auto;
+        }
+
+        .carousel-btn {
+          width: 40px;
+          height: 40px;
+          font-size: 22px;
+          opacity: 0.7;
+        }
+
+        .video-caption {
+          margin-top: 15px;
+          font-size: 1.1em;
+        }
+
+        /* How it Works on smaller screens */
         .how-it-works .steps-list {
           flex-direction: column; /* Stack steps vertically */
           align-items: center; /* Center items when stacked */
@@ -681,12 +539,36 @@
         }
         #home-content > p {
           font-size: 1em;
+          padding: 0 15px;
         }
         #about-content h1 {
           font-size: 1.6em;
         }
         #about-content h2 {
           font-size: 1.2em;
+        }
+
+        .video-showcase {
+          min-height: 220px;
+        }
+
+        .video-carousel-container {
+          min-height: 180px;
+        }
+
+        .video-track .media-item {
+          min-height: 180px;
+        }
+
+        .carousel-btn {
+          width: 38px;
+          height: 38px;
+          font-size: 20px;
+        }
+
+        .video-caption {
+          margin-top: 12px;
+          font-size: 1em;
         }
 
         /* How it Works on smallest screens */
