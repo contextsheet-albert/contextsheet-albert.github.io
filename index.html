@@ -152,56 +152,68 @@
       /* Split Showcase (Replaces Media Carousel) */
       .split-showcase {
         display: flex;
-        gap: 30px; /* Gap between video and images */
+        justify-content: center; /* Center the showcase */
         margin: 0 auto 40px auto;
         max-width: 1100px; /* Adjust max-width if needed */
-        align-items: center;
       }
 
-      .showcase-left,
-      .showcase-right {
-        position: relative; /* Needed for captions/arrows */
-        height: 450px; /* <<<<< TRY SETTING EXPLICIT HEIGHT for alignment */
-        display: flex; /* Use flex to align caption below */
+      .video-showcase {
+        position: relative;
+        height: 450px;
+        display: flex;
         flex-direction: column;
-      }
-      .showcase-left {
-        flex: 1.5; /* Make left side 1.5 times wider than right */
-      }
-      .showcase-right {
-        flex: 1; /* Right side takes 1 part */
+        width: 100%;
+        max-width: 800px; /* Max width to prevent videos from getting too large */
       }
 
-      .showcase-left .media-container, /* Added wrapper */
-      .showcase-right .image-carousel-container {
-        flex-grow: 1; /* Allow container to fill height */
+      .video-carousel-container {
+        flex-grow: 1;
         width: 100%;
-        position: relative; /* Needed for positioning content/arrows */
-        overflow: hidden; /* Needed for carousel mask */
-        display: flex; /* Center content vertically */
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 15px; /* Space for caption */
+        margin-bottom: 15px;
       }
 
-      .showcase-left .media,
-      .showcase-right .media-item .media {
-        /* Target image within item */
-        display: block;
-        max-width: 100%;
-        max-height: 100%; /* Fill the container height */
-        height: auto; /* Maintain aspect ratio if width constrained */
-        width: auto; /* Maintain aspect ratio if height constrained */
-        border: 1px solid #eee;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      .video-track {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        position: relative;
       }
-      .showcase-left video.media {
+
+      .video-track .media-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.6s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .video-track .media-item.active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 1;
+      }
+
+      .video-track .media-item video {
+        max-width: 100%;
+        max-height: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         background-color: #f0f0f0;
       }
 
-      .showcase-left .caption,
-      .showcase-right .caption {
-        /* Caption below the carousel container */
+      .video-showcase .caption {
         font-family: "Times New Roman", Times, serif;
         font-size: 1em;
         color: #444;
@@ -210,69 +222,14 @@
         text-underline-offset: 3px;
         text-align: center;
         width: 100%;
-        flex-shrink: 0; /* Prevent caption from shrinking */
+        flex-shrink: 0;
       }
 
-      /* Image Carousel specific styles within showcase-right */
-      .image-carousel-container {
-        /* Styles moved above */
-      }
-
-      .image-track {
-        display: flex;
-        align-items: center; /* Vertically center items in track */
-        height: 100%;
-        position: absolute; /* Allow positioning via transform */
-        left: 0; /* Start track at the left */
-        transition: transform 0.6s ease-in-out;
-        will-change: transform; /* Optimize animation */
-      }
-
-      .image-track .media-item {
-        /* Removed absolute positioning */
-        width: 250px; /* <<<<< SET NARROWER FIXED WIDTH for items */
-        height: 90%; /* Make item slightly smaller than track height */
-        flex-shrink: 0; /* Prevent items from shrinking */
-        margin: 0 5px; /* Reduced horizontal spacing between items */
-        opacity: 0.4; /* Default faded look */
-        transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-        display: flex;
-        flex-direction: column; /* Keep media/caption stacked */
-        justify-content: center;
-        align-items: center;
-        position: relative; /* For absolute positioning caption inside */
-        transform: scale(1); /* Default scale */
-      }
-
-      .image-track .media-item.active {
-        opacity: 1;
-        /* visibility: visible; - Not needed with opacity */
-        /* z-index: 1; - Not needed with transform */
-        transform: scale(1.05); /* Slightly scale up active item */
-      }
-
-      /* Adjust media height within the right carousel */
-      .image-track .media-item .media {
-        max-height: 100%; /* Media fills item height */
-        /* No bottom margin needed as caption is positioned absolutely */
-        margin-bottom: 0;
-      }
-
-      /* Adjust caption position within right carousel items */
-      .image-track .media-item .caption {
-        /* This caption is not used anymore, main caption is below container */
-        display: none;
-      }
-
-      /* Main caption below carousel */
-      .showcase-right a.caption {
-        /* Style the caption link */
-        /* Styles defined earlier */
-        margin-top: 0; /* Remove potential top margin */
-        position: absolute;
-        bottom: 0px;
-        left: 0;
-        z-index: 10; /* Ensure it's above arrows */
+      .video-showcase .caption.video-caption {
+        position: relative;
+        margin-top: 10px;
+        text-align: center;
+        z-index: 10;
       }
 
       /* Reposition Carousel Navigation Arrows */
@@ -299,11 +256,11 @@
         background-color: rgba(0, 0, 0, 0.7);
       }
       /* Position arrows relative to showcase-right */
-      .showcase-right .image-carousel-container .carousel-btn.prev-btn {
-        left: 20%;
+      .video-carousel-container .carousel-btn.prev-btn {
+        left: 20px;
       }
-      .showcase-right .image-carousel-container .carousel-btn.next-btn {
-        right: 20%;
+      .video-carousel-container .carousel-btn.next-btn {
+        right: 20px;
       }
 
       /* About Page Specifics */
@@ -516,6 +473,32 @@
         .split-showcase {
           margin-bottom: 0px;
         }
+
+        .video-showcase {
+          height: 350px;
+        }
+
+        .video-carousel-container {
+          height: 300px;
+        }
+
+        .video-track .media-item video {
+          max-height: 280px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .video-showcase {
+          height: 300px;
+        }
+
+        .video-carousel-container {
+          height: 250px;
+        }
+
+        .video-track .media-item video {
+          max-height: 230px;
+        }
       }
 
       .how-it-works h2 {
@@ -666,7 +649,7 @@
           flex-direction: column;
           gap: 30px;
         }
-        .showcase-left .media {
+        .video-showcase .media {
           max-height: 250px; /* Adjust height for smaller screens */
         }
 
@@ -717,9 +700,9 @@
       }
 
       @media (max-width: 768px) {
-        .image-carousel-container,
-        .showcase-right .caption {
-          display: none;
+        .video-carousel-container,
+        .video-showcase .caption {
+          display: block; /* Changed from none to block to show the video carousel on mobile */
         }
       }
     </style>
@@ -751,78 +734,66 @@
       <section id="home-content">
         <!-- Removed H1 from here, using centered paragraph -->
         <p>
-          Contextsheet is a free and privacy friendly Google Sheets™ extension connecting
-          spreadsheets to LLMs (Gemini, Claude, ChatGPT) and Google Drive™ for
-          contextual answers, without ever leaving your Google environment (besides the LLM endpoints).
+          Contextsheet is a free and privacy friendly Google Sheets™ extension
+          connecting spreadsheets to LLMs (Gemini, Claude, ChatGPT) and Google
+          Drive™ for contextual answers, without ever leaving your Google
+          environment (besides the LLM endpoints).
         </p>
 
         <!-- Replaced media-carousel with split-showcase -->
         <div class="split-showcase">
-          <div class="showcase-left">
-            <div class="media-container">
-              <video controls autoplay muted loop playsinline class="media">
-                <source src="images/video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="caption">Demo Video</div>
-          </div>
-          <div class="showcase-right">
-            <div class="image-carousel-container">
-              <div class="image-track">
+          <div class="video-showcase">
+            <div class="video-carousel-container">
+              <div class="video-track">
                 <div class="media-item active">
-                  <img
-                    src="images/main_page.png"
-                    alt="Contextsheet Main Interface"
-                    class="media"
-                  />
+                  <video
+                    controls
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="media video-carousel-item"
+                    data-caption="Demo Video"
+                  >
+                    <source src="images/demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
                 <div class="media-item">
-                  <img
-                    src="images/loading_response.png"
-                    alt="Contextsheet Loading Response"
-                    class="media"
-                  />
+                  <video
+                    controls
+                    muted
+                    playsinline
+                    class="media video-carousel-item"
+                    data-caption="Use case 1: Data privacy"
+                  >
+                    <source src="images/dpa.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
                 <div class="media-item">
-                  <img
-                    src="images/response.png"
-                    alt="Contextsheet Response Example"
-                    class="media"
-                  />
-                </div>
-                <div class="media-item">
-                  <img
-                    src="images/options.png"
-                    alt="Contextsheet Options"
-                    class="media"
-                  />
-                </div>
-                <div class="media-item">
-                  <img
-                    src="images/advanced_options.png"
-                    alt="Contextsheet Advanced Options"
-                    class="media"
-                  />
-                </div>
-                <div class="media-item">
-                  <img
-                    src="images/settings.png"
-                    alt="Contextsheet Settings Panel"
-                    class="media"
-                  />
+                  <video
+                    controls
+                    muted
+                    playsinline
+                    class="media video-carousel-item"
+                    data-caption="Use case 2: HR contracts"
+                  >
+                    <source src="images/hr.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
               </div>
 
-              <!-- Navigation Arrows for Image Carousel -->
-              <button class="carousel-btn prev-btn" aria-label="Previous Image">
+              <!-- Navigation Arrows for Video Carousel -->
+              <button class="carousel-btn prev-btn" aria-label="Previous Video">
                 &#10094;
               </button>
-              <button class="carousel-btn next-btn" aria-label="Next Image">
+              <button class="carousel-btn next-btn" aria-label="Next Video">
                 &#10095;
               </button>
             </div>
-            <a class="caption">Main Interface</a>
+            <div class="caption video-caption">Demo Video</div>
           </div>
         </div>
 
@@ -971,15 +942,16 @@
           </div>
         </div>
         <p>
-          I built Contextsheet because manually copying data into spreadsheets from AI chat
-          interfaces, especially when needing context from Drive documents, felt
-          inefficient.
+          I built Contextsheet because manually copying data into spreadsheets
+          from AI chat interfaces, especially when needing context from Drive
+          documents, felt inefficient.
         </p>
         <p>
-          This add-on aims to bridge that gap to connect Sheets, Drive, and various LLM APIs (Gemini, Claude via
-          Anthropic/Bedrock, and OpenAI). It incorporates features like document
-          ranking and context management to provide more relevant answers
-          directly within the spreadsheet environment, kinda like RAGs.
+          This add-on aims to bridge that gap to connect Sheets, Drive, and
+          various LLM APIs (Gemini, Claude via Anthropic/Bedrock, and OpenAI).
+          It incorporates features like document ranking and context management
+          to provide more relevant answers directly within the spreadsheet
+          environment, kinda like RAGs.
         </p>
         <p>
           Privacy has been priority number one, with all user data kept in your
@@ -989,11 +961,16 @@
           APIs chosen by the user.
         </p>
         <p>
-          Some private thoughts on the project as well:
-          <br>
-          The extension is no way near perfect, as both quota limits(if your on free tier like me) and document finding is a bit inconsintent (hence why i created all of the options).
-          I'm also working on a PDF OCR feature, so that you can use scanned PDFs as context as well.
-          All of this is coded without any libraries other than Google Apps Script, which enables a lot of privacy, but decreases the amount of oppertunities for performance improvements (would have loved to incorporate stuff like Langchain or even just a vector DB).
+          Some thoughts on the project as well:
+          <br />
+          The extension is no way near perfect, as both quota limits(if your on
+          free tier like me) and document finding is a bit inconsintent (hence
+          why i created all of the options). I'm also working on a PDF OCR
+          feature, so that you can use scanned PDFs as context as well. All of
+          this is coded without any libraries other than Google Apps Script,
+          which enables a lot of privacy, but decreases the amount of
+          opportunities for performance improvements (would have loved to
+          incorporate stuff like Langchain or even just a vector DB).
         </p>
         <!-- Moved Get Started Here -->
         <h2>Get Started</h2>
@@ -1105,56 +1082,36 @@
       // document.getElementById('nav-about').addEventListener('click', (e) => { e.preventDefault(); showPage('about-content'); });
       // The onclick attributes in the HTML should suffice here.
 
-      // --- Media Carousel Logic (Now targets only images on right) ---
-      const imageCarouselContainer = document.querySelector(
-        ".image-carousel-container"
+      // --- Media Carousel Logic (Now targets videos) ---
+      const videoCarouselContainer = document.querySelector(
+        ".video-carousel-container"
       );
-      const imageTrack = imageCarouselContainer?.querySelector(".image-track");
-      const showcaseRightCaptionLink = document.querySelector(
-        ".showcase-right > a.caption"
-      ); // Get the main caption LINK element
-      const imageCaptions = [
-        "Main Interface",
-        "Loading Response",
-        "Example Response",
-        "Options",
-        "Advanced Options",
-        "Settings Panel",
-      ]; // Store captions
+      const videoTrack = videoCarouselContainer?.querySelector(".video-track");
+      const videoCaption = document.querySelector(
+        ".video-showcase .caption.video-caption"
+      ); // Get the caption element
+      const videoElements = videoCarouselContainer?.querySelectorAll(
+        ".video-carousel-item"
+      );
+      let currentIndex = 0;
 
-      if (imageCarouselContainer && imageTrack) {
-        const items = imageTrack.querySelectorAll(".media-item"); // Select items within the track
-        const prevBtn = imageCarouselContainer.querySelector(".prev-btn"); // Look within the container
-        const nextBtn = imageCarouselContainer.querySelector(".next-btn"); // Look within the container
-        let currentIndex = 0;
-        let intervalId = null;
-        const slideDuration = 10000; // 10 seconds
+      if (videoCarouselContainer && videoTrack) {
+        const items = videoTrack.querySelectorAll(".media-item"); // Select items within the track
+        const prevBtn = videoCarouselContainer.querySelector(".prev-btn"); // Look within the container
+        const nextBtn = videoCarouselContainer.querySelector(".next-btn"); // Look within the container
 
-        // Function to recalculate layout dependent values
-        function calculateLayout() {
-          if (!items || items.length === 0)
-            return { itemWidth: 0, containerWidth: 0 };
-          const itemStyle = window.getComputedStyle(items[0]);
-          const itemWidth =
-            items[0].offsetWidth +
-            parseFloat(itemStyle.marginLeft) +
-            parseFloat(itemStyle.marginRight);
-          const containerWidth = imageCarouselContainer.offsetWidth;
-          return { itemWidth, containerWidth };
-        }
-
+        // Function to show a specific video
         function showItem(index) {
           if (!items || items.length === 0) return;
 
-          const { itemWidth, containerWidth } = calculateLayout();
-          if (itemWidth === 0) return; // Avoid division by zero if item width is 0
-
-          // Calculate the translation needed to center the item
-          const offset = containerWidth / 2 - itemWidth / 2;
-          const translateX = -(index * itemWidth) + offset;
-
-          // Apply the transform to the track
-          imageTrack.style.transform = `translateX(${translateX}px)`;
+          // Pause all videos
+          items.forEach((item) => {
+            const video = item.querySelector("video");
+            if (video) {
+              video.pause();
+              video.currentTime = 0;
+            }
+          });
 
           // Remove active class from all items
           items.forEach((item) => item.classList.remove("active"));
@@ -1162,67 +1119,63 @@
           // Add active class to the target item
           items[index].classList.add("active");
 
-          // Update the main caption
-          if (showcaseRightCaptionLink && imageCaptions[index]) {
-            const captionText = imageCaptions[index];
-            showcaseRightCaptionLink.textContent = captionText;
-            // Generate href ID from caption text
-            const hrefId = `details-${captionText
-              .toLowerCase()
-              .replace(/\s+/g, "-")
-              .replace(/[^a-z0-9-]/g, "")}`;
-            showcaseRightCaptionLink.href = `#${hrefId}`;
+          // Play the current video
+          const currentVideo = items[index].querySelector("video");
+          if (currentVideo) {
+            // Ensure video is set to play
+            currentVideo.autoplay = true;
+            const playPromise = currentVideo.play();
+
+            // Handle play promise to prevent errors
+            if (playPromise !== undefined) {
+              playPromise.catch((error) => {
+                console.log("Autoplay was prevented:", error);
+                // Add a play button or other fallback here if needed
+              });
+            }
+
+            // Update the caption
+            if (videoCaption) {
+              videoCaption.textContent =
+                currentVideo.dataset.caption || "Video";
+            }
           }
         }
 
         function nextItem() {
           currentIndex = (currentIndex + 1) % items.length;
           showItem(currentIndex);
-          startCarousel(); // Reset timer on manual click
         }
 
         function prevItem() {
           currentIndex = (currentIndex - 1 + items.length) % items.length;
           showItem(currentIndex);
-          startCarousel(); // Reset timer on manual click
-        }
-
-        function startCarousel() {
-          // Clear existing interval just in case
-          clearInterval(intervalId);
-          // Start new interval
-          intervalId = setInterval(nextItem, slideDuration);
         }
 
         // Event Listeners for buttons
         if (prevBtn && items.length > 1) {
-          // Only add listener if multiple items
-          prevBtn.addEventListener("click", () => {
-            prevItem();
-            startCarousel(); // Reset timer on manual click
-          });
-        }
-        if (nextBtn && items.length > 1) {
-          // Only add listener if multiple items
-          nextBtn.addEventListener("click", () => {
-            nextItem();
-            startCarousel(); // Reset timer on manual click
-          });
+          prevBtn.addEventListener("click", prevItem);
         }
 
-        // Recalculate layout on window resize
-        window.addEventListener("resize", () => showItem(currentIndex));
+        if (nextBtn && items.length > 1) {
+          nextBtn.addEventListener("click", nextItem);
+        }
+
+        // Add event listeners to videos to move to next when ended
+        items.forEach((item, index) => {
+          const video = item.querySelector("video");
+          if (video) {
+            video.addEventListener("ended", () => {
+              // Move to next video when current one ends
+              nextItem();
+            });
+          }
+        });
 
         // Initialize
-        if (items.length > 1) {
-          // Only start carousel if there's more than one item
-          showItem(currentIndex); // Show initial item
-          startCarousel(); // Start automatic cycling
-        } else if (items.length === 1) {
-          showItem(0); // Show the single item if only one exists
-        }
+        showItem(currentIndex); // Show initial item
       }
-      // --- End Media Carousel Logic ---
+      // --- End Video Carousel Logic ---
 
       // --- About Me Carousel Logic ---
       const aboutMeCarousel = document.querySelector(".about-me-carousel");
