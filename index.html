@@ -36,6 +36,34 @@
         width: 100%;
       }
 
+      /* Consistent Section Padding */
+      #home-content > div,
+      #about-content > div,
+      #about-content > h2,
+      #about-content > p,
+      #about-content > ul,
+      #about-content > a.button {
+        max-width: 800px; /* Consistent max-width like about page */
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Adjust padding for specific home sections */
+      #home-content > .split-showcase {
+        max-width: 1100px; /* Allow showcase to be wider */
+      }
+      #home-content > .how-it-works,
+      #home-content > .upcoming-features-static,
+      #home-content > .feature-details {
+        padding: 30px 0;
+        max-width: 800px; /* Apply max-width */
+        text-align: left; /* Align content left */
+      }
+
+      #home-content > .feature-details {
+        padding-top: 0; /* Remove extra padding */
+      }
+
       /* Header */
       header {
         background-color: #ffffff;
@@ -207,10 +235,11 @@
       }
 
       .video-track .media-item video {
+        width: 100%;
         max-width: 100%;
+        height: auto;
         max-height: 100%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: #f0f0f0;
+        box-sizing: border-box;
       }
 
       .video-showcase .caption {
@@ -428,10 +457,24 @@
 
       /* How it Works Section */
       .how-it-works {
-        margin-top: 60px; /* Similar spacing to upcoming features */
         padding: 30px 0;
-        text-align: center;
-        border-top: 1px solid #eee; /* Add separator */
+        margin-top: 40px;
+        max-width: 800px;
+        text-align: left; /* Ensure left alignment */
+      }
+
+      .how-it-works h2 {
+        text-align: left; /* Explicitly set left alignment for the h2 */
+        margin-bottom: 25px;
+      }
+
+      /* Reset any conflicting styles that might center the text */
+      #home-content .how-it-works {
+        text-align: left;
+      }
+
+      #home-content .how-it-works h2 {
+        text-align: left;
       }
 
       @media (max-width: 768px) {
@@ -489,9 +532,11 @@
         }
 
         .video-track .media-item {
-          position: relative;
-          height: auto;
-          min-height: 200px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
         }
 
         .video-track .media-item video {
@@ -587,6 +632,531 @@
           display: block; /* Changed from none to block to show the video carousel on mobile */
         }
       }
+
+      .how-it-works .steps-list,
+      .upcoming-features-static .roadmap-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      /* How it Works Section Styling (Keep existing flex layout) */
+      .how-it-works .steps-list {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 20px 30px;
+        justify-content: center;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .how-it-works .steps-list li {
+        font-size: 1em;
+        color: #555;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+        min-width: 200px;
+        flex-basis: calc(50% - 15px);
+      }
+
+      .how-it-works .steps-list li span {
+        font-size: 1.5em;
+        flex-shrink: 0;
+      }
+
+      /* Upcoming Features Section Styling (Keep existing flex layout) */
+      .upcoming-features-static .roadmap-list {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 15px 30px;
+        justify-content: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .upcoming-features-static .roadmap-list li {
+        font-size: 1em;
+        color: #555;
+        text-align: center;
+      }
+
+      .upcoming-features-static .roadmap-list li i {
+        margin-right: 8px;
+        font-style: normal;
+      }
+
+      /* Feature Details Section */
+      .feature-details {
+        /* margin-top: 40px; Removed */
+        /* padding-top: 20px; Removed */
+        /* border-top: 1px solid #eee; Removed */
+      }
+
+      .feature-explanation {
+        margin-bottom: 40px;
+      }
+
+      .feature-explanation h3 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+
+      .feature-explanation p {
+        margin-bottom: 15px;
+        color: #555;
+        font-size: 0.95em;
+      }
+
+      @media (max-width: 768px) {
+        #home-content > .split-showcase {
+          /* Ensures the container for the showcase is centered */
+          display: flex;
+          justify-content: center;
+          padding-left: 10px;
+          padding-right: 10px;
+          box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        .video-showcase {
+          min-height: 300px;
+          margin-bottom: 50px;
+          width: 100%; /* Ensure showcase takes full width within padded parent */
+          box-sizing: border-box;
+          display: flex; /* Ensure flex properties for alignment */
+          flex-direction: column;
+        }
+
+        .video-carousel-container {
+          flex-grow: 1; /* Allow container to take available height */
+          min-height: 280px;
+          width: 100%;
+          box-sizing: border-box;
+          position: relative; /* Needed for absolute children */
+          display: flex; /* Center the track */
+          align-items: center;
+          justify-content: center;
+        }
+
+        .video-track {
+          width: 100%;
+          height: 100%;
+          position: relative;
+        }
+
+        .video-track .media-item {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex; /* Use flex to center video inside */
+          justify-content: center;
+          align-items: center;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.6s ease-in-out;
+        }
+
+        .video-track .media-item.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .video-track .media-item video {
+          display: block; /* Ensure it's a block element */
+          width: auto; /* Let width adjust based on height */
+          height: auto; /* Let height adjust based on width */
+          max-width: 100%; /* Limit width to container */
+          max-height: 100%; /* Limit height to container */
+          object-fit: contain; /* Maintain aspect ratio, fit within bounds */
+          box-sizing: border-box;
+        }
+
+        .carousel-btn {
+          transform: translateY(-50%);
+        }
+
+        .carousel-btn.prev-btn {
+          left: 5px;
+        }
+        .carousel-btn.next-btn {
+          right: 5px;
+        }
+        /* ... other styles ... */
+      }
+
+      @media (max-width: 480px) {
+        /* ... other styles ... */
+        #home-content > .split-showcase {
+          padding-left: 5px; /* Less padding on very small screens */
+          padding-right: 5px;
+        }
+
+        .video-showcase {
+          min-height: 250px;
+        }
+
+        .video-carousel-container {
+          min-height: 230px;
+        }
+
+        .video-track .media-item video {
+          max-height: 85%;
+        }
+
+        .carousel-btn.prev-btn {
+          left: 2px;
+        }
+        .carousel-btn.next-btn {
+          right: 2px;
+        }
+        /* ... other styles ... */
+      }
+
+      /* Consistent H2 Styling */
+      #home-content h2,
+      #about-content h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        color: #333;
+        border-bottom: 1px solid #eee; /* Keep bottom border */
+        padding-bottom: 5px;
+        margin-bottom: 25px; /* Increased spacing */
+        margin-top: 40px;
+        font-size: 1.4em;
+        text-align: left; /* Align left */
+      }
+
+      /* Remove conflicting H2 styles */
+      #about-content h1 + h2, /* First H2 on about page */
+      #home-content .how-it-works h2,
+      #home-content .upcoming-features-static h2,
+      #home-content .feature-details h2 {
+        margin-top: 0; /* Remove top margin if it directly follows another element */
+        text-align: left;
+        font-size: 1.4em; /* Ensure consistent size */
+        /* Remove other specific styles if needed */
+      }
+      #home-content .feature-details h2 {
+        text-align: left; /* Override center */
+        margin-bottom: 25px; /* Consistent margin */
+      }
+
+      #about-content h1 {
+        font-size: 1.8em;
+        text-align: center;
+        border-bottom: none; /* No border for main H1 */
+        margin-bottom: 25px;
+        margin-top: 0; /* Align with container top */
+        max-width: 800px; /* Consistent max-width */
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Consistent Paragraph and List Styling */
+      #home-content p,
+      #home-content ul,
+      #about-content p,
+      #about-content ul {
+        margin-bottom: 15px;
+        color: #555;
+        font-size: 0.95em;
+        line-height: 1.7; /* Consistent line height */
+      }
+      #home-content ul,
+      #about-content ul {
+        margin-left: 20px;
+        list-style: disc; /* Use standard bullets where applicable */
+      }
+      #home-content .steps-list,
+      #home-content .roadmap-list {
+        list-style: none; /* Keep these lists unstyled */
+        margin-left: 0; /* Remove indent */
+        padding: 0; /* Remove padding */
+        max-width: 100%; /* Allow flex items to space out */
+      }
+      #about-content li {
+        /* Keep specific about list item margin */
+        margin-bottom: 8px;
+      }
+      #home-content strong,
+      #about-content strong {
+        color: #111; /* Make strong text darker */
+        font-weight: 600;
+      }
+      #home-content a,
+      #about-content a:not(.button) {
+        /* Style links excluding buttons */
+        color: black;
+        text-decoration: none;
+      }
+      #home-content a:hover,
+      #about-content a:not(.button):hover {
+        text-decoration: underline;
+      }
+
+      /* Consistent H3 Styling (using Feature Explanation style) */
+      #home-content h3,
+      #about-content h3 {
+        /* Apply to any potential H3 in about */
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 500;
+        font-size: 1.1em;
+        color: #444;
+        margin-bottom: 15px; /* Consistent margin */
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        text-align: left; /* Align left */
+        margin-top: 40px; /* Add spacing above H3 */
+      }
+
+      #home-content .feature-explanation {
+        margin-bottom: 30px;
+        padding-top: 0; /* Remove anchor offset padding */
+        margin-top: 0; /* Remove anchor offset margin */
+      }
+      #home-content .feature-explanation h3 {
+        margin-top: 0; /* No top margin for these specific h3 */
+      }
+
+      /* Static Upcoming Features Section */
+      .upcoming-features-static {
+        /* margin-top: 60px; Removed */
+        /* padding: 30px 0; Removed */
+        /* border-top: 1px solid #eee; Removed */
+        /* text-align: center; Removed */
+      }
+      .upcoming-features-static p {
+        margin-top: 20px;
+        font-size: 0.9em; /* Slightly smaller email text */
+        text-align: center; /* Center the email text */
+      }
+
+      /* Feature Details Section */
+      .feature-details {
+        /* margin-top: 40px; Removed */
+        /* padding-top: 20px; Removed */
+        /* border-top: 1px solid #eee; Removed */
+      }
+
+      /* Feature Explanation */
+      .feature-explanation p {
+        color: #555;
+        line-height: 1.7;
+        /* Removed other specific styles, now use general p style */
+      }
+
+      @media (max-width: 768px) {
+        /* ... other styles ... */
+        #home-content > div,
+        #about-content > div,
+        #about-content > h2,
+        #about-content > p,
+        #about-content > ul,
+        #about-content > a.button {
+          max-width: 100%; /* Remove max-width on mobile */
+          padding-left: 15px; /* Add consistent padding */
+          padding-right: 15px;
+        }
+
+        #home-content > .split-showcase {
+          max-width: 100%; /* Remove max-width */
+          padding-left: 10px; /* Keep slightly less for showcase */
+          padding-right: 10px;
+        }
+
+        #home-content h2,
+        #about-content h2 {
+          padding-left: 0; /* Remove specific padding for headers */
+          padding-right: 0;
+          margin-left: 15px; /* Use margin instead */
+          margin-right: 15px;
+        }
+
+        #about-content h1 {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        #home-content ul,
+        #about-content ul {
+          margin-left: 35px; /* Keep indent relative to padding */
+        }
+        #home-content .steps-list,
+        #home-content .roadmap-list {
+          margin-left: 15px; /* Adjust padding/margin */
+          padding-left: 0;
+          padding-right: 15px;
+          align-items: flex-start; /* Ensure left alignment */
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* ... other styles ... */
+        #home-content h2,
+        #about-content h2 {
+          font-size: 1.3em; /* Slightly smaller h2 */
+        }
+        #home-content h3,
+        #about-content h3 {
+          font-size: 1.2em; /* Slightly smaller h3 */
+        }
+        #home-content p,
+        #home-content ul,
+        #about-content p,
+        #about-content ul {
+          font-size: 0.9em; /* Slightly smaller text */
+        }
+        #home-content > div,
+        #about-content > div,
+        #about-content > h2,
+        #about-content > p,
+        #about-content > ul,
+        #about-content > a.button {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        #home-content h2,
+        #about-content h2 {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        #home-content ul,
+        #about-content ul {
+          margin-left: 30px;
+        }
+        #home-content .steps-list,
+        #home-content .roadmap-list {
+          margin-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+      /* Video Player Styles */
+      #simple-video-player {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 450px;
+        background-color: transparent;
+        overflow: hidden;
+      }
+
+      #main-video {
+        width: 100%;
+        max-height: 450px;
+        display: block;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 0;
+        object-fit: contain;
+        background-color: transparent;
+      }
+
+      .video-controls {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        box-sizing: border-box;
+        pointer-events: none; /* Allow clicks to pass through to the video */
+      }
+
+      .video-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        cursor: pointer;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+        pointer-events: auto; /* Make buttons clickable */
+      }
+
+      .video-btn:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      .video-caption {
+        text-align: center;
+        margin-top: 15px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 1.1em;
+        color: #444;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+
+      .video-showcase {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto 20px auto;
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        #simple-video-player {
+          min-height: 300px;
+        }
+
+        #main-video {
+          max-height: 300px;
+        }
+
+        .video-btn {
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #simple-video-player {
+          min-height: 250px;
+        }
+
+        #main-video {
+          max-height: 250px;
+        }
+
+        .video-btn {
+          width: 36px;
+          height: 36px;
+          font-size: 16px;
+        }
+      }
+
+      /* Remove any white backgrounds from video containers */
+      .video-showcase,
+      .split-showcase,
+      #simple-video-player,
+      #main-video,
+      .video-track,
+      .media-item {
+        background-color: transparent !important;
+      }
     </style>
   </head>
   <body>
@@ -625,64 +1195,33 @@
         <!-- Replaced media-carousel with split-showcase -->
         <div class="split-showcase">
           <div class="video-showcase">
-            <div class="video-carousel-container">
-              <div class="video-track">
-                <div class="media-item active">
-                  <video
-                    controls
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    class="media video-carousel-item"
-                    data-caption="Demo Video"
-                  >
-                    <source src="images/demo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-                <div class="media-item">
-                  <video
-                    controls
-                    muted
-                    playsinline
-                    class="media video-carousel-item"
-                    data-caption="Use case 1: Data privacy"
-                  >
-                    <source src="images/dpa.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-                <div class="media-item">
-                  <video
-                    controls
-                    muted
-                    playsinline
-                    class="media video-carousel-item"
-                    data-caption="Use case 2: HR contracts"
-                  >
-                    <source src="images/hr.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+            <div id="simple-video-player">
+              <video id="main-video" controls autoplay muted playsinline>
+                <source
+                  src="images/demo.mp4"
+                  type="video/mp4"
+                  id="video-source"
+                />
+                Your browser does not support the video tag.
+              </video>
+              <!-- Navigation Controls -->
+              <div class="video-controls">
+                <button class="video-btn prev-btn" aria-label="Previous Video">
+                  &#10094;
+                </button>
+                <button class="video-btn next-btn" aria-label="Next Video">
+                  &#10095;
+                </button>
               </div>
-
-              <!-- Navigation Arrows for Video Carousel -->
-              <button class="carousel-btn prev-btn" aria-label="Previous Video">
-                &#10094;
-              </button>
-              <button class="carousel-btn next-btn" aria-label="Next Video">
-                &#10095;
-              </button>
             </div>
-            <div class="caption video-caption">Demo Video</div>
+            <div class="video-caption">Demo Video</div>
           </div>
         </div>
 
         <!-- How it Works Section -->
         <div class="how-it-works">
           <h2>How it Works (4 Simple Steps)</h2>
-          <ol class="steps-list">
+          <ul class="steps-list">
             <li>
               <span>🔗</span> 1. Insert URL to Drive folder / file for context.
             </li>
@@ -693,7 +1232,7 @@
             <li>
               <span>🥳</span> 4. Check responses and insert into your sheet.
             </li>
-          </ol>
+          </ul>
           <div style="text-align: center; margin-top: 30px">
             <a
               href="[YOUR_GOOGLE_WORKSPACE_MARKETPLACE_LINK_HERE]"
@@ -708,7 +1247,7 @@
         <!-- Static Upcoming Features Section -->
         <div class="upcoming-features-static">
           <h2>Future Roadmap</h2>
-          <ul>
+          <ul class="roadmap-list">
             <li>
               <i>🖖</i> Save tokens by combining queries using same documents as
               context
@@ -1094,6 +1633,59 @@
             e.preventDefault();
             showPage("about-content");
           });
+      });
+
+      // Video Switching Logic
+      document.addEventListener("DOMContentLoaded", function () {
+        const mainVideo = document.getElementById("main-video");
+        const videoSource = document.getElementById("video-source");
+        const prevBtn = document.querySelector(".video-btn.prev-btn");
+        const nextBtn = document.querySelector(".video-btn.next-btn");
+        const videoCaption = document.querySelector(".video-caption");
+
+        // Define videos and their captions
+        const videos = [
+          { src: "images/demo.mp4", caption: "Demo Video" },
+          { src: "images/dpa.mp4", caption: "Use case 1: Data privacy" },
+          { src: "images/hr.mp4", caption: "Use case 2: HR contracts" },
+        ];
+
+        let currentVideoIndex = 0;
+
+        // Function to update video source and caption
+        function updateVideo(index) {
+          // Pause current video
+          mainVideo.pause();
+
+          // Update source
+          videoSource.src = videos[index].src;
+
+          // Update caption
+          videoCaption.textContent = videos[index].caption;
+
+          // Load and play new video
+          mainVideo.load();
+          mainVideo.play();
+        }
+
+        // Handle next button click
+        nextBtn.addEventListener("click", function () {
+          currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+          updateVideo(currentVideoIndex);
+        });
+
+        // Handle previous button click
+        prevBtn.addEventListener("click", function () {
+          currentVideoIndex =
+            (currentVideoIndex - 1 + videos.length) % videos.length;
+          updateVideo(currentVideoIndex);
+        });
+
+        // Handle video end - go to next video
+        mainVideo.addEventListener("ended", function () {
+          currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+          updateVideo(currentVideoIndex);
+        });
       });
     </script>
   </body>
