@@ -820,23 +820,28 @@
         background-color: transparent !important;
       }
 
-      /* Specific Styles for Terms of Service Section */
-      #terms-content .effective-date { /* Style for the effective date paragraph */
+      #terms-content .effective-date {
         font-style: italic;
         color: #555;
         margin-bottom: 20px; /* Space below date */
+        font-weight: normal; /* Ensure this isn't bold */
       }
-      #terms-content .contact-info { /* Style for contact info block */
+      #terms-content .contact-info {
          margin-top: 2em;
          padding-top: 1em;
          border-top: 1px solid #eee;
+         font-weight: normal; /* Ensure this isn't bold */
       }
-      /* Ensure links within ToS use the blue color */
-      #terms-content a {
-          color: #007bff;
+      /* Remove any bold styling from terms content */
+      #terms-content p,
+      #terms-content li,
+      #terms-content ul {
+        font-weight: normal;
       }
-      #terms-content a:hover {
-          text-decoration: underline;
+      /* Make strong elements in terms match privacy policy */
+      #terms-content strong {
+        color: #111; /* Make strong text darker */
+        font-weight: 600; /* Same as privacy policy */
       }
 
 
@@ -1391,13 +1396,13 @@
 
       <!-- START: Terms of Service Content -->
       <section id="terms-content" class="hidden">
-          <h1>Terms of Service for Contextsheet</h1>
-          <p class="effective-date">Effective Date: April 27, 2025</p> <!-- * REPLACE DATE * -->
+        <h1>Terms of Service for Contextsheet</h1>
+        <p class="effective-date">Effective Date: April 27, 2025</p>
 
-          <h2>1. Acceptance of Terms</h2>
-          <p>
-              Welcome to Contextsheet (the "Service"), a Google Sheets Add-on provided by Albert Steenstrup ("me", "I", "my"). By installing, accessing, or using the Service, you ("User," "you," or "your") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not install or use the Service.
-          </p>
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+            Welcome to Contextsheet (the "Service"), a Google Sheets Add-on provided by Albert Steenstrup ("me", "I", "my"). By installing, accessing, or using the Service, you ("User," "you," or "your") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not install or use the Service.
+        </p>
           <p>
               These Terms incorporate by reference my Privacy Policy, available at <a href="https://contextsheet.com/privacy-policy">https://contextsheet.com/privacy-policy</a>. Please review the Privacy Policy carefully.
           </p>
