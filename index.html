@@ -36,13 +36,11 @@
         width: 100%;
       }
 
-      /* Consistent Section Padding */
+      /* Consistent Section Padding & Max Width for Text-Heavy Sections */
       #home-content > div,
-      #about-content > div,
-      #about-content > h2,
-      #about-content > p,
-      #about-content > ul,
-      #about-content > a.button {
+      #about-content, /* Apply directly to section */
+      #privacy-content, /* Apply directly to section */
+      #terms-content { /* Apply directly to section */
         max-width: 800px; /* Consistent max-width like about page */
         margin-left: auto;
         margin-right: auto;
@@ -138,7 +136,7 @@
       }
 
       /* Home Page Specifics */
-      #home-content h1 {
+      #home-content h1 { /* This H1 is currently removed, but keeping style just in case */
         text-align: center;
         font-family: "Times New Roman", Times, serif;
         font-weight: normal;
@@ -146,8 +144,7 @@
         margin-bottom: 30px;
         color: #444;
       }
-      #home-content > p {
-        /* Style the intro paragraph */
+      #home-content > p:first-of-type { /* Style the intro paragraph */
         text-align: center;
         max-width: 700px;
         margin: 0 auto 40px auto; /* Center block and add bottom margin */
@@ -279,12 +276,10 @@
         align-items: center;
         justify-content: center;
         transition: background-color 0.2s ease;
-        /* Position relative to showcase-right which is the flex item */
       }
       .carousel-btn:hover {
         background-color: rgba(0, 0, 0, 0.7);
       }
-      /* Position arrows relative to showcase-right */
       .video-carousel-container .carousel-btn.prev-btn {
         left: 20px;
       }
@@ -292,14 +287,16 @@
         right: 20px;
       }
 
-      /* About Page Specifics */
-      #about-content {
-        max-width: 800px; /* Narrower content for text */
-        margin: 0 auto; /* Center the about content */
+      /* Generic styles for text-based sections (About, Privacy, Terms) */
+      #about-content,
+      #privacy-content,
+      #terms-content {
+        max-width: 800px;
+        margin: 0 auto;
       }
 
-      #about-content h1,
-      #about-content h2 {
+      #about-content h1, #privacy-content h1, #terms-content h1,
+      #about-content h2, #privacy-content h2, #terms-content h2 {
         font-family: "Times New Roman", Times, serif;
         font-weight: normal;
         color: #333;
@@ -308,61 +305,69 @@
         margin-bottom: 15px;
         margin-top: 30px;
       }
-      #about-content h1 {
+      #about-content h1, #privacy-content h1, #terms-content h1 {
         font-size: 1.8em;
         text-align: center;
         border-bottom: none; /* No border for main H1 */
         margin-bottom: 25px;
+        margin-top: 0; /* Align with container top */
       }
-      #about-content h2 {
+      #about-content h2, #privacy-content h2, #terms-content h2 {
         font-size: 1.4em;
-        margin-top: 40px;
+        text-align: left;
+        margin-top: 40px; /* Space above H2s */
       }
 
-      #about-content p,
-      #about-content ul {
+      #about-content p, #privacy-content p, #terms-content p,
+      #about-content ul, #privacy-content ul, #terms-content ul {
         margin-bottom: 15px;
         color: #555;
         font-size: 0.95em;
+        line-height: 1.7; /* Consistent line height */
       }
-      #about-content ul {
+      #about-content ul, #privacy-content ul, #terms-content ul {
         margin-left: 20px;
+        padding-left: 0; /* Remove default padding */
         list-style: disc; /* Use standard bullets */
       }
-      #about-content li {
+      #about-content ul ul, #privacy-content ul ul, #terms-content ul ul {
+        /* Style nested lists */
+        margin-top: 5px;
+        margin-left: 25px; /* Further indent */
+        list-style: circle; /* Different bullet */
+      }
+      #about-content li, #privacy-content li, #terms-content li {
         margin-bottom: 8px;
       }
-      #about-content strong {
+      #about-content strong, #privacy-content strong, #terms-content strong {
         color: #111; /* Make strong text darker */
         font-weight: 600;
       }
-      #about-content a {
-        /* Style links within about page */
-        color: black; /* Standard link blue */
+      #about-content a:not(.button), #privacy-content a:not(.button), #terms-content a:not(.button) {
+        /* Style links excluding buttons */
+        color: #007bff; /* Standard link blue */
         text-decoration: none;
       }
-      #about-content a:hover {
+      #about-content a:not(.button):hover, #privacy-content a:not(.button):hover, #terms-content a:not(.button):hover {
         text-decoration: underline;
       }
 
-      /* About Intro Layout */
+       /* Specific to About page intro */
       .about-intro {
         display: flex;
-        gap: 30px; /* Space between carousel and text */
-        align-items: center; /* Vertically align items */
-        margin-bottom: 25px; /* Space below the intro block */
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 25px;
       }
-
       .about-me-carousel {
-        width: 150px; /* Fixed width for the carousel */
+        width: 150px;
         height: 150px;
-        flex-shrink: 0; /* Prevent carousel from shrinking */
+        flex-shrink: 0;
         position: relative;
         overflow: hidden;
-        border-radius: 50%; /* Make it circular */
+        border-radius: 50%;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
       }
-
       .about-me-carousel .carousel-item {
         position: absolute;
         top: 0;
@@ -371,39 +376,35 @@
         height: 100%;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.8s ease-in-out; /* Smooth fade */
+        transition: opacity 0.8s ease-in-out;
       }
-
       .about-me-carousel .carousel-item.active {
         opacity: 1;
         visibility: visible;
       }
-
       .about-me-carousel img {
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Ensure image covers the circle */
+        object-fit: cover;
       }
-
       .about-intro-text {
-        flex-grow: 1; /* Allow text to take remaining space */
+        flex-grow: 1;
       }
-
-      /* Connect List Icons */
-      #about-content .connect-list li {
+      .connect-list li {
         display: flex;
-        align-items: center; /* Vertically align icon and text */
-        gap: 8px; /* Space between icon and text */
-        margin-bottom: 10px; /* Space between list items */
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
       }
-      #about-content .connect-list img.icon {
-        width: 20px; /* Set icon size */
+      .connect-list img.icon {
+        width: 20px;
         height: 20px;
-        flex-shrink: 0; /* Prevent icon from shrinking */
+        flex-shrink: 0;
       }
 
-      /* Buttons (Keep for About page, slightly simplified) */
+
+      /* Buttons */
       .button {
         display: inline-block;
         background-color: #1877f2; /* Brighter Blue */
@@ -445,6 +446,7 @@
       footer a {
         color: #666; /* Slightly darker link */
         text-decoration: none;
+        margin: 0 5px; /* Add spacing around footer links */
       }
       footer a:hover {
         text-decoration: underline;
@@ -462,185 +464,26 @@
         max-width: 800px;
         text-align: left; /* Ensure left alignment */
       }
-
       .how-it-works h2 {
         text-align: left; /* Explicitly set left alignment for the h2 */
         margin-bottom: 25px;
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        color: #333;
+        border-bottom: 1px solid #eee; /* Keep bottom border */
+        padding-bottom: 5px;
+        margin-top: 40px;
+        font-size: 1.4em;
       }
-
-      /* Reset any conflicting styles that might center the text */
       #home-content .how-it-works {
         text-align: left;
       }
-
       #home-content .how-it-works h2 {
         text-align: left;
       }
-
-      @media (max-width: 768px) {
-        #home-content {
-          display: flex;
-          flex-direction: column;
-        }
-
-        /* 1. intro text */
-        #home-content > p {
-          order: 0;
-        }
-
-        /* 2. split showcase (video + carousel) */
-        #home-content > .split-showcase {
-          order: 1;
-        }
-
-        /* 3. feature explanations */
-        #home-content > .feature-details {
-          order: 4;
-        }
-
-        /* 4. how‑it‑works */
-        #home-content > .how-it-works {
-          order: 2;
-        }
-
-        /* 5. roadmap */
-        #home-content > .upcoming-features-static {
-          order: 3;
-        }
-
-        .how-it-works {
-          margin-top: 10px;
-          padding-top: 10px;
-        }
-
-        .split-showcase {
-          margin-bottom: 20px;
-          padding: 0 10px;
-        }
-
-        .video-showcase {
-          height: auto;
-          min-height: 250px;
-          max-height: none;
-          margin-bottom: 40px;
-        }
-
-        .video-carousel-container {
-          height: auto;
-          min-height: 200px;
-          width: 100%;
-        }
-
-        .video-track .media-item {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
-
-        .video-track .media-item video {
-          width: 100%;
-          height: auto;
-        }
-
-        .carousel-btn {
-          width: 40px;
-          height: 40px;
-          font-size: 22px;
-          opacity: 0.7;
-        }
-
-        .video-caption {
-          margin-top: 15px;
-          font-size: 1.1em;
-        }
-
-        /* How it Works on smaller screens */
-        .how-it-works .steps-list {
-          flex-direction: column; /* Stack steps vertically */
-          align-items: center; /* Center items when stacked */
-          gap: 15px; /* Adjust gap for column layout */
-        }
-        .how-it-works .steps-list li {
-          flex-basis: auto; /* Reset basis */
-          width: 80%; /* Adjust width */
-          max-width: 400px; /* Max width for readability */
-        }
-      }
-
-      @media (max-width: 480px) {
-        body {
-          font-size: 15px; /* Slightly smaller base font */
-        }
-        .nav-center {
-          font-size: 1.4em;
-        }
-        .nav-left a {
-          font-size: 0.9em;
-        }
-        #home-content h1 {
-          font-size: 1.3em;
-        }
-        #home-content > p {
-          font-size: 1em;
-          padding: 0 15px;
-        }
-        #about-content h1 {
-          font-size: 1.6em;
-        }
-        #about-content h2 {
-          font-size: 1.2em;
-        }
-
-        .video-showcase {
-          min-height: 220px;
-        }
-
-        .video-carousel-container {
-          min-height: 180px;
-        }
-
-        .video-track .media-item {
-          min-height: 180px;
-        }
-
-        .carousel-btn {
-          width: 38px;
-          height: 38px;
-          font-size: 20px;
-        }
-
-        .video-caption {
-          margin-top: 12px;
-          font-size: 1em;
-        }
-
-        /* How it Works on smallest screens */
-        .how-it-works .steps-list li {
-          width: 95%; /* Take more width on very small screens */
-          font-size: 0.95em;
-        }
-        .how-it-works .steps-list li span {
-          font-size: 1.4em;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .video-carousel-container,
-        .video-showcase .caption {
-          display: block; /* Changed from none to block to show the video carousel on mobile */
-        }
-      }
-
-      .how-it-works .steps-list,
-      .upcoming-features-static .roadmap-list {
+      .how-it-works .steps-list {
         list-style: none;
         padding: 0;
-      }
-
-      /* How it Works Section Styling (Keep existing flex layout) */
-      .how-it-works .steps-list {
         display: inline-flex;
         flex-wrap: wrap;
         gap: 20px 30px;
@@ -648,7 +491,6 @@
         max-width: 900px;
         margin: 0 auto;
       }
-
       .how-it-works .steps-list li {
         font-size: 1em;
         color: #555;
@@ -659,382 +501,222 @@
         min-width: 200px;
         flex-basis: calc(50% - 15px);
       }
-
       .how-it-works .steps-list li span {
         font-size: 1.5em;
         flex-shrink: 0;
       }
 
-      /* Upcoming Features Section Styling (Keep existing flex layout) */
+
+      /* Static Upcoming Features Section */
+      .upcoming-features-static {
+        max-width: 800px; /* Consistent max-width */
+        margin: 40px auto 0 auto; /* Add margin and center */
+        padding: 30px 0;
+        text-align: left;
+      }
+       .upcoming-features-static h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        margin-bottom: 25px;
+        margin-top: 0; /* No extra top margin needed */
+        font-size: 1.4em;
+        text-align: left;
+      }
       .upcoming-features-static .roadmap-list {
+        list-style: none;
+        padding: 0;
         display: inline-flex;
         flex-wrap: wrap;
         gap: 15px 30px;
         justify-content: center;
-        max-width: 800px;
-        margin: 0 auto;
+        max-width: 100%; /* Allow wrap within container */
+        margin: 0; /* Remove auto margin */
+        text-align: left;
       }
-
       .upcoming-features-static .roadmap-list li {
         font-size: 1em;
         color: #555;
-        text-align: center;
+        text-align: left; /* Align list items left */
+        flex-basis: calc(50% - 15px); /* Adjust basis */
+        min-width: 200px;
       }
-
       .upcoming-features-static .roadmap-list li i {
         margin-right: 8px;
         font-style: normal;
       }
-
-      /* Feature Details Section */
-      .feature-details {
-        /* margin-top: 40px; Removed */
-        /* padding-top: 20px; Removed */
-        /* border-top: 1px solid #eee; Removed */
-      }
-
-      .feature-explanation {
-        margin-bottom: 40px;
-      }
-
-      .feature-explanation h3 {
-        font-family: "Times New Roman", Times, serif;
-        font-weight: normal;
-        color: #333;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 5px;
-        margin-bottom: 15px;
-      }
-
-      .feature-explanation p {
-        margin-bottom: 15px;
-        color: #555;
-        font-size: 0.95em;
-      }
-
-      @media (max-width: 768px) {
-        #home-content > .split-showcase {
-          /* Ensures the container for the showcase is centered */
-          display: flex;
-          justify-content: center;
-          padding-left: 10px;
-          padding-right: 10px;
-          box-sizing: border-box; /* Include padding in width calculation */
-        }
-
-        .video-showcase {
-          min-height: 300px;
-          margin-bottom: 50px;
-          width: 100%; /* Ensure showcase takes full width within padded parent */
-          box-sizing: border-box;
-          display: flex; /* Ensure flex properties for alignment */
-          flex-direction: column;
-        }
-
-        .video-carousel-container {
-          flex-grow: 1; /* Allow container to take available height */
-          min-height: 280px;
-          width: 100%;
-          box-sizing: border-box;
-          position: relative; /* Needed for absolute children */
-          display: flex; /* Center the track */
-          align-items: center;
-          justify-content: center;
-        }
-
-        .video-track {
-          width: 100%;
-          height: 100%;
-          position: relative;
-        }
-
-        .video-track .media-item {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex; /* Use flex to center video inside */
-          justify-content: center;
-          align-items: center;
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 0.6s ease-in-out;
-        }
-
-        .video-track .media-item.active {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .video-track .media-item video {
-          display: block; /* Ensure it's a block element */
-          width: auto; /* Let width adjust based on height */
-          height: auto; /* Let height adjust based on width */
-          max-width: 100%; /* Limit width to container */
-          max-height: 100%; /* Limit height to container */
-          object-fit: contain; /* Maintain aspect ratio, fit within bounds */
-          box-sizing: border-box;
-        }
-
-        .carousel-btn {
-          transform: translateY(-50%);
-        }
-
-        .carousel-btn.prev-btn {
-          left: 5px;
-        }
-        .carousel-btn.next-btn {
-          right: 5px;
-        }
-        /* ... other styles ... */
-      }
-
-      @media (max-width: 480px) {
-        /* ... other styles ... */
-        #home-content > .split-showcase {
-          padding-left: 5px; /* Less padding on very small screens */
-          padding-right: 5px;
-        }
-
-        .video-showcase {
-          min-height: 250px;
-        }
-
-        .video-carousel-container {
-          min-height: 230px;
-        }
-
-        .video-track .media-item video {
-          max-height: 85%;
-        }
-
-        .carousel-btn.prev-btn {
-          left: 2px;
-        }
-        .carousel-btn.next-btn {
-          right: 2px;
-        }
-        /* ... other styles ... */
-      }
-
-      /* Consistent H2 Styling */
-      #home-content h2,
-      #about-content h2 {
-        font-family: "Times New Roman", Times, serif;
-        font-weight: normal;
-        color: #333;
-        border-bottom: 1px solid #eee; /* Keep bottom border */
-        padding-bottom: 5px;
-        margin-bottom: 25px; /* Increased spacing */
-        margin-top: 40px;
-        font-size: 1.4em;
-        text-align: left; /* Align left */
-      }
-
-      /* Remove conflicting H2 styles */
-      #about-content h1 + h2, /* First H2 on about page */
-      #home-content .how-it-works h2,
-      #home-content .upcoming-features-static h2,
-      #home-content .feature-details h2 {
-        margin-top: 0; /* Remove top margin if it directly follows another element */
-        text-align: left;
-        font-size: 1.4em; /* Ensure consistent size */
-        /* Remove other specific styles if needed */
-      }
-      #home-content .feature-details h2 {
-        text-align: left; /* Override center */
-        margin-bottom: 25px; /* Consistent margin */
-      }
-
-      #about-content h1 {
-        font-size: 1.8em;
-        text-align: center;
-        border-bottom: none; /* No border for main H1 */
-        margin-bottom: 25px;
-        margin-top: 0; /* Align with container top */
-        max-width: 800px; /* Consistent max-width */
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      /* Consistent Paragraph and List Styling */
-      #home-content p,
-      #home-content ul,
-      #about-content p,
-      #about-content ul {
-        margin-bottom: 15px;
-        color: #555;
-        font-size: 0.95em;
-        line-height: 1.7; /* Consistent line height */
-      }
-      #home-content ul,
-      #about-content ul {
-        margin-left: 20px;
-        list-style: disc; /* Use standard bullets where applicable */
-      }
-      #home-content .steps-list,
-      #home-content .roadmap-list {
-        list-style: none; /* Keep these lists unstyled */
-        margin-left: 0; /* Remove indent */
-        padding: 0; /* Remove padding */
-        max-width: 100%; /* Allow flex items to space out */
-      }
-      #about-content li {
-        /* Keep specific about list item margin */
-        margin-bottom: 8px;
-      }
-      #home-content strong,
-      #about-content strong {
-        color: #111; /* Make strong text darker */
-        font-weight: 600;
-      }
-      #home-content a,
-      #about-content a:not(.button) {
-        /* Style links excluding buttons */
-        color: white;
-        text-decoration: none;
-      }
-      #home-content a:hover,
-      #about-content a:not(.button):hover {
-        text-decoration: underline;
-      }
-
-      /* Consistent H3 Styling (using Feature Explanation style) */
-      #home-content h3,
-      #about-content h3 {
-        /* Apply to any potential H3 in about */
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-weight: 500;
-        font-size: 1.1em;
-        color: #444;
-        margin-bottom: 15px; /* Consistent margin */
-        border-bottom: 1px solid #eee;
-        padding-bottom: 5px;
-        text-align: left; /* Align left */
-        margin-top: 40px; /* Add spacing above H3 */
-      }
-
-      #home-content .feature-explanation {
-        margin-bottom: 30px;
-        padding-top: 0; /* Remove anchor offset padding */
-        margin-top: 0; /* Remove anchor offset margin */
-      }
-      #home-content .feature-explanation h3 {
-        margin-top: 0; /* No top margin for these specific h3 */
-      }
-
-      /* Static Upcoming Features Section */
-      .upcoming-features-static {
-        /* margin-top: 60px; Removed */
-        /* padding: 30px 0; Removed */
-        /* border-top: 1px solid #eee; Removed */
-        /* text-align: center; Removed */
-      }
       .upcoming-features-static p {
         margin-top: 20px;
-        font-size: 0.9em; /* Slightly smaller email text */
+        font-size: 0.95em; /* Consistent font size */
         text-align: center; /* Center the email text */
       }
 
+
       /* Feature Details Section */
       .feature-details {
-        /* margin-top: 40px; Removed */
-        /* padding-top: 20px; Removed */
-        /* border-top: 1px solid #eee; Removed */
+        max-width: 800px;
+        margin: 40px auto 0 auto;
       }
-
-      /* Feature Explanation */
+      .feature-details h2 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: normal;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        margin-bottom: 25px;
+        margin-top: 0; /* No extra top margin needed */
+        font-size: 1.4em;
+        text-align: left;
+      }
+      .feature-explanation {
+        margin-bottom: 40px;
+      }
+      .feature-explanation h3 {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Match base font */
+        font-weight: 500;
+        font-size: 1.1em;
+        color: #444;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        text-align: left;
+        margin-top: 40px; /* Space above H3 */
+      }
+      .feature-explanation:first-of-type h3 {
+        margin-top: 0; /* No top margin for the very first H3 */
+      }
       .feature-explanation p {
+        margin-bottom: 15px;
         color: #555;
+        font-size: 0.95em;
         line-height: 1.7;
-        /* Removed other specific styles, now use general p style */
       }
 
+
+      /* Media Queries for Responsiveness */
       @media (max-width: 768px) {
-        /* ... other styles ... */
-        #home-content > div,
-        #about-content > div,
-        #about-content > h2,
-        #about-content > p,
-        #about-content > ul,
-        #about-content > a.button {
-          max-width: 100%; /* Remove max-width on mobile */
-          padding-left: 15px; /* Add consistent padding */
-          padding-right: 15px;
-        }
+        /* Order for Home Content */
+        #home-content { display: flex; flex-direction: column; }
+        #home-content > p:first-of-type { order: 0; }
+        #home-content > .split-showcase { order: 1; }
+        #home-content > .how-it-works { order: 2; }
+        #home-content > .upcoming-features-static { order: 3; }
+        #home-content > .feature-details { order: 4; }
 
-        #home-content > .split-showcase {
-          max-width: 100%; /* Remove max-width */
-          padding-left: 10px; /* Keep slightly less for showcase */
-          padding-right: 10px;
-        }
-
-        #home-content h2,
-        #about-content h2 {
-          padding-left: 0; /* Remove specific padding for headers */
-          padding-right: 0;
-          margin-left: 15px; /* Use margin instead */
-          margin-right: 15px;
-        }
-
-        #about-content h1 {
+        /* General Padding for Text Sections on Mobile */
+        #about-content,
+        #privacy-content,
+        #terms-content {
+          max-width: 100%;
           padding-left: 15px;
           padding-right: 15px;
         }
+        #about-content h1, #privacy-content h1, #terms-content h1,
+        #about-content h2, #privacy-content h2, #terms-content h2 {
+          margin-left: 0;
+          margin-right: 0;
+        }
+        #about-content ul, #privacy-content ul, #terms-content ul {
+          margin-left: 25px;
+        }
+        #about-content ul ul, #privacy-content ul ul, #terms-content ul ul {
+          margin-left: 30px;
+        }
 
-        #home-content ul,
-        #about-content ul {
-          margin-left: 35px; /* Keep indent relative to padding */
-        }
-        #home-content .steps-list,
-        #home-content .roadmap-list {
-          margin-left: 15px; /* Adjust padding/margin */
-          padding-left: 0;
+        /* Home Content Specific Mobile */
+        #home-content > div:not(.split-showcase) {
+          max-width: 100%;
+          padding-left: 15px;
           padding-right: 15px;
-          align-items: flex-start; /* Ensure left alignment */
         }
+        #home-content h2 {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        #home-content .how-it-works { margin-top: 10px; padding-top: 10px; }
+        #home-content .split-showcase {
+          margin-bottom: 20px;
+          padding: 0 10px;
+           max-width: 100%;
+        }
+        #home-content .how-it-works .steps-list { margin-left: 0; padding-right: 0; }
+        #home-content .how-it-works .steps-list li { flex-basis: 100%; min-width: 0; }
+
+        #home-content .upcoming-features-static { margin-left: 0; margin-right: 0;}
+        #home-content .upcoming-features-static .roadmap-list { padding: 0; margin-left: 0; }
+        #home-content .upcoming-features-static .roadmap-list li { flex-basis: 100%; }
+
+        /* Video Showcase Mobile */
+        .video-showcase {
+          min-height: 300px;
+          margin-bottom: 50px;
+          width: 100%;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+        }
+        .video-carousel-container {
+          flex-grow: 1;
+          min-height: 280px;
+          width: 100%;
+          box-sizing: border-box;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .video-track { width: 100%; height: 100%; position: relative; }
+        .video-track .media-item {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.6s ease-in-out;
+        }
+        .video-track .media-item.active { opacity: 1; visibility: visible; }
+        .video-track .media-item video {
+            display: block; width: auto; height: auto;
+            max-width: 100%; max-height: 100%;
+            object-fit: contain; box-sizing: border-box;
+        }
+        .carousel-btn { transform: translateY(-50%); width: 40px; height: 40px; font-size: 22px; opacity: 0.7;}
+        .carousel-btn.prev-btn { left: 5px; }
+        .carousel-btn.next-btn { right: 5px; }
+        .video-caption { margin-top: 15px; font-size: 1.1em; }
       }
 
       @media (max-width: 480px) {
-        /* ... other styles ... */
-        #home-content h2,
-        #about-content h2 {
-          font-size: 1.3em; /* Slightly smaller h2 */
-        }
-        #home-content h3,
-        #about-content h3 {
-          font-size: 1.2em; /* Slightly smaller h3 */
-        }
-        #home-content p,
-        #home-content ul,
-        #about-content p,
-        #about-content ul {
-          font-size: 0.9em; /* Slightly smaller text */
-        }
-        #home-content > div,
-        #about-content > div,
-        #about-content > h2,
-        #about-content > p,
-        #about-content > ul,
-        #about-content > a.button {
-          padding-left: 10px;
-          padding-right: 10px;
-        }
-        #home-content h2,
-        #about-content h2 {
-          margin-left: 10px;
-          margin-right: 10px;
-        }
-        #home-content ul,
-        #about-content ul {
-          margin-left: 30px;
-        }
-        #home-content .steps-list,
-        #home-content .roadmap-list {
-          margin-left: 10px;
-          padding-right: 10px;
-        }
+        body { font-size: 15px; }
+        .nav-center { font-size: 1.4em; }
+        .nav-left a { font-size: 0.9em; }
+
+        /* Text Sections */
+        #about-content, #privacy-content, #terms-content { padding-left: 10px; padding-right: 10px; }
+        #about-content h1, #privacy-content h1, #terms-content h1 { font-size: 1.6em; }
+        #about-content h2, #privacy-content h2, #terms-content h2 { font-size: 1.2em; }
+        #about-content p, #privacy-content p, #terms-content p,
+        #about-content ul, #privacy-content ul, #terms-content ul { font-size: 0.9em; }
+        #about-content ul, #privacy-content ul, #terms-content ul { margin-left: 20px; }
+        #about-content ul ul, #privacy-content ul ul, #terms-content ul ul { margin-left: 25px; }
+
+        /* Home Content */
+        #home-content > div:not(.split-showcase) { padding-left: 10px; padding-right: 10px; }
+        #home-content h2 { font-size: 1.3em; }
+        #home-content h3 { font-size: 1.1em; }
+        #home-content p, #home-content ul { font-size: 0.9em; }
+        #home-content > p:first-of-type { font-size: 1em; padding: 0 10px; }
+        #home-content .how-it-works .steps-list li { width: 95%; }
+        #home-content .upcoming-features-static .roadmap-list li { width: 95%; }
+
+
+        /* Video Showcase */
+        .video-showcase { min-height: 250px; }
+        .video-carousel-container { min-height: 230px; }
+        .video-track .media-item video { max-height: 85%; }
+        .carousel-btn { width: 38px; height: 38px; font-size: 20px; }
+        .carousel-btn.prev-btn { left: 2px; }
+        .carousel-btn.next-btn { right: 2px; }
+        .video-caption { margin-top: 12px; font-size: 1em; }
       }
 
       /* Video Player Styles */
@@ -1117,35 +799,15 @@
 
       /* Mobile adjustments */
       @media (max-width: 768px) {
-        #simple-video-player {
-          min-height: 300px;
-        }
-
-        #main-video {
-          max-height: 300px;
-        }
-
-        .video-btn {
-          width: 40px;
-          height: 40px;
-          font-size: 18px;
-        }
+        #simple-video-player { min-height: 300px; }
+        #main-video { max-height: 300px; }
+        .video-btn { width: 40px; height: 40px; font-size: 18px; }
       }
 
       @media (max-width: 480px) {
-        #simple-video-player {
-          min-height: 250px;
-        }
-
-        #main-video {
-          max-height: 250px;
-        }
-
-        .video-btn {
-          width: 36px;
-          height: 36px;
-          font-size: 16px;
-        }
+        #simple-video-player { min-height: 250px; }
+        #main-video { max-height: 250px; }
+        .video-btn { width: 36px; height: 36px; font-size: 16px; }
       }
 
       /* Remove any white backgrounds from video containers */
@@ -1158,101 +820,26 @@
         background-color: transparent !important;
       }
 
-      /* Style the Privacy Policy section like the About section */
-      #privacy-content {
-        max-width: 800px; /* Consistent max-width */
-        margin: 0 auto; /* Center the content */
-      }
-      #privacy-content h1,
-      #privacy-content h2 {
-        font-family: "Times New Roman", Times, serif;
-        font-weight: normal;
-        color: #333;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 5px;
-        margin-bottom: 15px;
-        margin-top: 30px;
-      }
-      #privacy-content h1 {
-        font-size: 1.8em;
-        text-align: center;
-        border-bottom: none;
-        margin-bottom: 25px;
-        margin-top: 0; /* Align with container top */
-      }
-      #privacy-content h2 {
-        font-size: 1.4em;
-        text-align: left;
-      }
-      #privacy-content p,
-      #privacy-content ul {
-        margin-bottom: 15px;
+      /* Specific Styles for Terms of Service Section */
+      #terms-content .effective-date { /* Style for the effective date paragraph */
+        font-style: italic;
         color: #555;
-        font-size: 0.95em;
-        line-height: 1.7; /* Consistent line height */
+        margin-bottom: 20px; /* Space below date */
       }
-      #privacy-content ul {
-        margin-left: 20px;
-        list-style: disc;
+      #terms-content .contact-info { /* Style for contact info block */
+         margin-top: 2em;
+         padding-top: 1em;
+         border-top: 1px solid #eee;
       }
-      #privacy-content ul ul {
-        /* Style nested lists */
-        margin-top: 5px;
-        margin-left: 25px; /* Further indent */
-        list-style: circle; /* Different bullet */
+      /* Ensure links within ToS use the blue color */
+      #terms-content a {
+          color: #007bff;
       }
-      #privacy-content li {
-        margin-bottom: 8px;
-      }
-      #privacy-content strong {
-        color: #111;
-        font-weight: 600;
-      }
-      #privacy-content a {
-        color: black;
-        text-decoration: none;
-      }
-      #privacy-content a:hover {
-        text-decoration: underline;
+      #terms-content a:hover {
+          text-decoration: underline;
       }
 
-      /* Mobile adjustments for Privacy Policy */
-      @media (max-width: 768px) {
-        #privacy-content {
-          max-width: 100%; /* Remove max-width on mobile */
-          padding-left: 15px; /* Add consistent padding */
-          padding-right: 15px;
-        }
-        #privacy-content h1,
-        #privacy-content h2 {
-          margin-left: 0;
-          margin-right: 0;
-        }
-        #privacy-content ul {
-          margin-left: 25px; /* Adjust indent */
-        }
-        #privacy-content ul ul {
-          margin-left: 30px;
-        }
-      }
-      @media (max-width: 480px) {
-        #privacy-content p,
-        #privacy-content ul {
-          font-size: 0.9em; /* Slightly smaller text */
-        }
-        #privacy-content h1 {
-          font-size: 1.6em;
-        }
-        #privacy-content h2 {
-          font-size: 1.2em;
-        }
-        #privacy-content ul {
-          margin-left: 20px; /* Adjust indent */
-        }
-        #privacy-content ul ul {
-          margin-left: 25px;
-        }
-      }
+
     </style>
   </head>
   <body>
@@ -1303,10 +890,10 @@
               <!-- Navigation Controls -->
               <div class="video-controls">
                 <button class="video-btn prev-btn" aria-label="Previous Video">
-                  &#10094;
+                  ❮
                 </button>
                 <button class="video-btn next-btn" aria-label="Next Video">
-                  &#10095;
+                  ❯
                 </button>
               </div>
             </div>
@@ -1331,7 +918,7 @@
           </ul>
           <div style="text-align: center; margin-top: 30px">
             <a
-              href="[YOUR_GOOGLE_WORKSPACE_MARKETPLACE_LINK_HERE]"
+              href="https://workspace.google.com/marketplace/app/contextsheet/355521301178" <!-- * REPLACE WITH YOUR ACTUAL LINK * -->
               target="_blank"
               rel="noopener noreferrer"
               class="button"
@@ -1353,9 +940,9 @@
             <li><i>🐢</i> Slower answers as a workaround quota limits</li>
             <!-- Add more planned features -->
           </ul>
-          <p style="margin-top: 20px; font-size: 0.95em">
+          <p>
             Have suggestions for new features or found a bug? Email me at
-            albert.steenstrup@contextsheet.com
+            <a href="mailto:albert.steenstrup@contextsheet.com">albert.steenstrup@contextsheet.com</a>
           </p>
         </div>
 
@@ -1512,316 +1099,532 @@
           </li>
         </ul>
       </section>
-      <!-- START: Privacy Policy Content -->
-      <!-- START: Privacy Policy Content -->
-<section id="privacy-content" class="hidden">
-  <h1>Privacy Policy for Contextsheet</h1>
-  <p><strong>Effective Date:</strong> April 27, 2025</p> <!-- * REPLACE DATE * -->
 
-  <h2>1. Introduction</h2>
-  <p>
-    Welcome to Contextsheet. This Privacy Policy explains how I collect, use, disclose, and safeguard your information
-    when you use my Google Workspace Add-on, Contextsheet (the "Add-on"),
-    within Google Sheets.
-  </p>
-  <p>
-    The Add-on allows users to interact with Large Language Models (LLMs)
-    like Google Gemini, Anthropic Claude, and OpenAI ChatGPT to get
-    answers based on the context of selected cells in their Google Sheet
-    and/or content from Google Drive files or folders they specify.
-  </p>
-  <p>
-    Contextsheet is designed with privacy as a core principle. Your Google Sheet data and Google Drive content accessed by the Add-on remain within Google's infrastructure and are only sent directly from Google's servers (where the Add-on script runs) to the specific third-party LLM API endpoint you select via the Add-on. I do not operate any intermediate servers that process or store your core data.
-  </p>
-  <p>
-    Please read this privacy policy carefully. If you do not agree with
-    the terms of this privacy policy, please do not install or use the
-    Add-on.
-  </p>
+      <!-- Privacy Policy Content -->
+      <section id="privacy-content" class="hidden">
+        <h1>Privacy Policy for Contextsheet</h1>
+        <p><strong>Effective Date:</strong> April 27, 2025</p> <!-- * REPLACE DATE * -->
 
-  <h2>2. Information I Collect and Access</h2>
-  <p>
-    To provide its functionality, the Add-on needs to access or collect the following information, all processed within your Google environment or sent directly to your chosen LLM:
-  </p>
-  <ul>
-    <li>
-      <strong>Google Sheet Data (User-Initiated Access):</strong>
-      <ul>
-        <li>
-          <strong>Cell Content:</strong> When you select cells in your
-          Google Sheet and submit a query, the text content of those
-          selected cells is accessed by the Add-on's backend script
-          (Code.gs), running on Google's servers.
-        </li>
-        <li>
-          <strong>Cell A1 Notation:</strong> The location (e.g., "A1",
-          "B2:C5") of your selected cells is accessed to identify the
-          source of the data and for potential insertion operations.
-        </li>
-      </ul>
-    </li>
-    <li>
-      <strong>Google Drive Data (User-Initiated Access):</strong>
-      <ul>
-        <li>
-          <strong>File/Folder Content:</strong> When you provide a Google
-          Drive file or folder URL, the Add-on's backend script (running on Google's servers) accesses the content of the specified files
-          (including files within the specified folder) to use as context
-          for answering your queries. This may include text extraction
-          from documents, spreadsheets, presentations, and PDFs
-          (potentially using Google's internal conversion services).
-        </li>
-        <li>
-          <strong>File Metadata:</strong> The Add-on accesses metadata
-          (like file names, IDs, web links, modified times, mime types) of
-          the specified Drive files/folders using Google's APIs.
-        </li>
-      </ul>
-    </li>
-    <li>
-      <strong>User Configuration and Input:</strong>
-      <ul>
-        <li>
-          <strong>Queries:</strong> The questions or prompts you type into
-          the Add-on sidebar.
-        </li>
-        <li>
-          <strong>API Keys:</strong> API keys you provide for third-party
-          LLM services (Google Gemini, Anthropic Claude, OpenAI ChatGPT).
-          These are required to interact with the respective services. These keys are stored securely within your Google environment (UserProperties) and are never transmitted outside Google except when used to authenticate directly with the LLM provider's API.
-        </li>
-        <li>
-          <strong>Settings:</strong> Your chosen LLM preference, the
-          provided Google Drive URL, toggle settings, and slider settings, stored within your Google environment (UserProperties).
-        </li>
-      </ul>
-    </li>
-    <li>
-      <strong>Google Account Information (Implicit):</strong>
-      <ul>
-        <li>
-          The Add-on operates under your Google Account's authority within the Google Workspace environment. I do
-          not directly collect or store your name or email address. Access
-          is controlled through Google's standard OAuth consent screen.
-        </li>
-      </ul>
-    </li>
-  </ul>
+        <h2>1. Introduction</h2>
+        <p>
+          Welcome to Contextsheet. This Privacy Policy explains how I collect, use, disclose, and safeguard your information
+          when you use my Google Workspace Add-on, Contextsheet (the "Add-on"),
+          within Google Sheets.
+        </p>
+        <p>
+          The Add-on allows users to interact with Large Language Models (LLMs)
+          like Google Gemini, Anthropic Claude, and OpenAI ChatGPT to get
+          answers based on the context of selected cells in their Google Sheet
+          and/or content from Google Drive files or folders they specify.
+        </p>
+        <p>
+          Contextsheet is designed with privacy as a core principle. Your Google Sheet data and Google Drive content accessed by the Add-on remain within Google's infrastructure and are only sent directly from Google's servers (where the Add-on script runs) to the specific third-party LLM API endpoint you select via the Add-on. I do not operate any intermediate servers that process or store your core data.
+        </p>
+        <p>
+          Please read this privacy policy carefully. If you do not agree with
+          the terms of this privacy policy, please do not install or use the
+          Add-on.
+        </p>
 
-  <h2>3. How I Use Your Information</h2>
-  <p>
-    All processing of your Sheet data and Drive content occurs within Google's Apps Script environment. I use the information collected or accessed solely for the following purposes:
-  </p>
-  <ul>
-    <li>
-      <strong>To Provide Add-on Functionality:</strong> To construct
-      prompts containing your query, selected Sheet data snippets, and/or
-      relevant Drive content snippets to be sent directly from Google's servers to the selected
-      third-party LLM API; To receive responses from the LLM API; To
-      display the results within the Add-on sidebar; To insert the
-      generated answers and optional notes back into your Google Sheet
-      based on your instructions.
-    </li>
-    <li>
-      <strong>To Store Your Configuration:</strong> To save your API keys
-      securely using Google Apps Script's UserProperties service (scoped
-      only to you and the script within your Google environment); To store your preferences (LLM, Drive
-      URL, settings) in UserProperties.
-    </li>
-    <li>
-      <strong>To Authenticate API Calls:</strong> To use your provided API
-      keys to make authenticated requests to third-party LLM services from
-      the Add-on's backend script (running on Google servers). Keys are never exposed client-side after saving.
-    </li>
-    <li>
-      <strong>To Improve the Add-on:</strong> I do not currently collect
-      anonymized usage data beyond standard Google Cloud error logging for
-      script execution issues within Google's infrastructure.
-    </li>
-  </ul>
+        <h2>2. Information I Collect and Access</h2>
+        <p>
+          To provide its functionality, the Add-on needs to access or collect the following information, all processed within your Google environment or sent directly to your chosen LLM:
+        </p>
+        <ul>
+          <li>
+            <strong>Google Sheet Data (User-Initiated Access):</strong>
+            <ul>
+              <li>
+                <strong>Cell Content:</strong> When you select cells in your
+                Google Sheet and submit a query, the text content of those
+                selected cells is accessed by the Add-on's backend script
+                (Code.gs), running on Google's servers.
+              </li>
+              <li>
+                <strong>Cell A1 Notation:</strong> The location (e.g., "A1",
+                "B2:C5") of your selected cells is accessed to identify the
+                source of the data and for potential insertion operations.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Google Drive Data (User-Initiated Access):</strong>
+            <ul>
+              <li>
+                <strong>File/Folder Content:</strong> When you provide a Google
+                Drive file or folder URL, the Add-on's backend script (running on Google's servers) accesses the content of the specified files
+                (including files within the specified folder) to use as context
+                for answering your queries. This may include text extraction
+                from documents, spreadsheets, presentations, and PDFs
+                (potentially using Google's internal conversion services).
+              </li>
+              <li>
+                <strong>File Metadata:</strong> The Add-on accesses metadata
+                (like file names, IDs, web links, modified times, mime types) of
+                the specified Drive files/folders using Google's APIs.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>User Configuration and Input:</strong>
+            <ul>
+              <li>
+                <strong>Queries:</strong> The questions or prompts you type into
+                the Add-on sidebar.
+              </li>
+              <li>
+                <strong>API Keys:</strong> API keys you provide for third-party
+                LLM services (Google Gemini, Anthropic Claude, OpenAI ChatGPT).
+                These are required to interact with the respective services. These keys are stored securely within your Google environment (UserProperties) and are never transmitted outside Google except when used to authenticate directly with the LLM provider's API.
+              </li>
+              <li>
+                <strong>Settings:</strong> Your chosen LLM preference, the
+                provided Google Drive URL, toggle settings, and slider settings, stored within your Google environment (UserProperties).
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Google Account Information (Implicit):</strong>
+            <ul>
+              <li>
+                The Add-on operates under your Google Account's authority within the Google Workspace environment. I do
+                not directly collect or store your name or email address. Access
+                is controlled through Google's standard OAuth consent screen.
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-  <h2>4. Third-Party Services and Data Sharing</h2>
-  <p>
-    To function, the Add-on interacts with the following services, always initiating connections from within Google's infrastructure:
-  </p>
-  <ul>
-    <li>
-      <strong>Google Cloud / Apps Script:</strong> The Add-on's backend
-      code runs on Google's infrastructure.
-    </li>
-    <li>
-      <strong>Google Drive API:</strong> Used to access file/folder
-      metadata and content within Google's ecosystem.
-    </li>
-    <li>
-      <strong>Google Workspace APIs (Sheets, Docs):</strong> Used to read selected cell data, insert results, and potentially convert files within Google's ecosystem.
-    </li>
-    <li>
-      <strong>Large Language Model (LLM) Providers: Crucially, data sent to LLMs travels directly from Google's servers (where the Add-on code runs) to the selected LLM provider's endpoint. No data is routed through or stored on any servers controlled by me (the developer). Based on your
-      selection, prompts containing your query, selected sheet cell
-      content snippets, and/or snippets of content from your specified
-      Drive files are sent to one of the following services:
-      <ul>
-        <li>
-          <strong>Google (Gemini Models):</strong>
-          <a
-            href="https://policies.google.com/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            >https://policies.google.com/privacy</a
-          >
-        </li>
-        <li>
-          <strong>Anthropic (Claude Models):</strong>
-          <a
-            href="https://www.anthropic.com/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            >https://www.anthropic.com/privacy</a
-          >
-        </li>
-        <li>
-          <strong>OpenAI (ChatGPT Models):</strong>
-          <a
-            href="https://openai.com/policies/privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-            >https://openai.com/policies/privacy-policy</a
-          >
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <p>
-    <strong>Important:</strong> I send the minimum necessary information
-    within the prompt required for the LLM to generate a relevant answer.
-    I do <strong>not</strong> share your API keys with these LLM
-    providers (they are used for authentication only). I do not route your data through any intermediate servers. Your interaction with these third-party LLM services is
-    also subject to their respective privacy policies and terms of
-    service. I encourage you to review them.
-  </p>
-  <p>
-    Other than the interactions described above, I do not share your
-    information with any other third parties. Your data stays within Google's environment or goes directly to the LLM endpoint you select.
-  </p>
+        <h2>3. How I Use Your Information</h2>
+        <p>
+          All processing of your Sheet data and Drive content occurs within Google's Apps Script environment. I use the information collected or accessed solely for the following purposes:
+        </p>
+        <ul>
+          <li>
+            <strong>To Provide Add-on Functionality:</strong> To construct
+            prompts containing your query, selected Sheet data snippets, and/or
+            relevant Drive content snippets to be sent directly from Google's servers to the selected
+            third-party LLM API; To receive responses from the LLM API; To
+            display the results within the Add-on sidebar; To insert the
+            generated answers and optional notes back into your Google Sheet
+            based on your instructions.
+          </li>
+          <li>
+            <strong>To Store Your Configuration:</strong> To save your API keys
+            securely using Google Apps Script's UserProperties service (scoped
+            only to you and the script within your Google environment); To store your preferences (LLM, Drive
+            URL, settings) in UserProperties.
+          </li>
+          <li>
+            <strong>To Authenticate API Calls:</strong> To use your provided API
+            keys to make authenticated requests to third-party LLM services from
+            the Add-on's backend script (running on Google servers). Keys are never exposed client-side after saving.
+          </li>
+          <li>
+            <strong>To Improve the Add-on:</strong> I do not currently collect
+            anonymized usage data beyond standard Google Cloud error logging for
+            script execution issues within Google's infrastructure.
+          </li>
+        </ul>
 
-  <h2>5. API Key Handling and Security</h2>
-  <ul>
-    <li>
-      <strong>Storage:</strong> Your API keys are stored using Google Apps
-      Script's UserProperties service, specific to you and this script
-      only, residing securely within Google's infrastructure.
-    </li>
-    <li>
-      <strong>Usage:</strong> Keys are retrieved by the backend script
-      (running on Google servers) only when needed to make authenticated API calls directly to the LLM provider. They are never
-      stored client-side or sent back to the sidebar after saving.
-    </li>
-    <li>
-      <strong>Security:</strong> The security of your stored keys depends
-      on your Google Account security. Use strong passwords and 2FA.
-    </li>
-  </ul>
+        <h2>4. Third-Party Services and Data Sharing</h2>
+        <p>
+          To function, the Add-on interacts with the following services, always initiating connections from within Google's infrastructure:
+        </p>
+        <ul>
+          <li>
+            <strong>Google Cloud / Apps Script:</strong> The Add-on's backend
+            code runs on Google's infrastructure.
+          </li>
+          <li>
+            <strong>Google Drive API:</strong> Used to access file/folder
+            metadata and content within Google's ecosystem.
+          </li>
+          <li>
+            <strong>Google Workspace APIs (Sheets, Docs):</strong> Used to read selected cell data, insert results, and potentially convert files within Google's ecosystem.
+          </li>
+          <li>
+            <strong>Large Language Model (LLM) Providers: Crucially, data sent to LLMs travels directly from Google's servers (where the Add-on code runs) to the selected LLM provider's endpoint. No data is routed through or stored on any servers controlled by me (the developer). Based on your
+            selection, prompts containing your query, selected sheet cell
+            content snippets, and/or snippets of content from your specified
+            Drive files are sent to one of the following services:
+            <ul>
+              <li>
+                <strong>Google (Gemini Models):</strong>
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://policies.google.com/privacy</a
+                >
+              </li>
+              <li>
+                <strong>Anthropic (Claude Models):</strong>
+                <a
+                  href="https://www.anthropic.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.anthropic.com/privacy</a
+                >
+              </li>
+              <li>
+                <strong>OpenAI (ChatGPT Models):</strong>
+                <a
+                  href="https://openai.com/policies/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://openai.com/policies/privacy-policy</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p>
+          <strong>Important:</strong> I send the minimum necessary information
+          within the prompt required for the LLM to generate a relevant answer.
+          I do <strong>not</strong> share your API keys with these LLM
+          providers (they are used for authentication only). I do not route your data through any intermediate servers. Your interaction with these third-party LLM services is
+          also subject to their respective privacy policies and terms of
+          service. I encourage you to review them.
+        </p>
+        <p>
+          Other than the interactions described above, I do not share your
+          information with any other third parties. Your data stays within Google's environment or goes directly to the LLM endpoint you select.
+        </p>
 
-  <h2>6. Data Storage and Security</h2>
-  <ul>
-    <li>
-      <strong>Configuration Data:</strong> Stored in UserProperties linked
-      to your Google Account within Google's environment.
-    </li>
-    <li>
-      <strong>Processing Data:</strong> Sheet/Drive content is processed
-      transiently by the backend script running entirely within Google's infrastructure and is not permanently stored by
-      the Add-on itself on any external servers. Snippets are sent directly to LLMs (see Section 4).
-    </li>
-    <li>
-      <strong>Transmission:</strong> All communication between your browser and Google's Apps Script servers, and between Apps Script servers and third-party APIs, occurs over
-      encrypted HTTPS.
-    </li>
-    <li>
-      <strong>Infrastructure:</strong> The Add-on, including its backend script (`Code.gs`), runs entirely within Google's secure Cloud infrastructure. No external servers controlled by me are used for data processing or storage.
-    </li>
-  </ul>
+        <h2>5. API Key Handling and Security</h2>
+        <ul>
+          <li>
+            <strong>Storage:</strong> Your API keys are stored using Google Apps
+            Script's UserProperties service, specific to you and this script
+            only, residing securely within Google's infrastructure.
+          </li>
+          <li>
+            <strong>Usage:</strong> Keys are retrieved by the backend script
+            (running on Google servers) only when needed to make authenticated API calls directly to the LLM provider. They are never
+            stored client-side or sent back to the sidebar after saving.
+          </li>
+          <li>
+            <strong>Security:</strong> The security of your stored keys depends
+            on your Google Account security. Use strong passwords and 2FA.
+          </li>
+        </ul>
 
-  <h2>7. Data Retention</h2>
-  <ul>
-    <li>
-      <strong>Configuration Data (API Keys, Settings):</strong> Retained
-      in UserProperties (within Google's environment) while the Add-on is installed or until you clear
-      them. I recommend clearing keys before uninstalling.
-    </li>
-    <li>
-      <strong>Sheet/Drive Content:</strong> Processed transiently on Google's servers; not
-      retained by the Add-on itself. Residual data may exist in Google execution logs or third-party LLM logs
-      per their respective policies.
-    </li>
-  </ul>
+        <h2>6. Data Storage and Security</h2>
+        <ul>
+          <li>
+            <strong>Configuration Data:</strong> Stored in UserProperties linked
+            to your Google Account within Google's environment.
+          </li>
+          <li>
+            <strong>Processing Data:</strong> Sheet/Drive content is processed
+            transiently by the backend script running entirely within Google's infrastructure and is not permanently stored by
+            the Add-on itself on any external servers. Snippets are sent directly to LLMs (see Section 4).
+          </li>
+          <li>
+            <strong>Transmission:</strong> All communication between your browser and Google's Apps Script servers, and between Apps Script servers and third-party APIs, occurs over
+            encrypted HTTPS.
+          </li>
+          <li>
+            <strong>Infrastructure:</strong> The Add-on, including its backend script (`Code.gs`), runs entirely within Google's secure Cloud infrastructure. No external servers controlled by me are used for data processing or storage.
+          </li>
+        </ul>
 
-  <h2>8. Your Choices and Rights</h2>
-  <ul>
-    <li>
-      <strong>Accessing and Modifying Settings:</strong> Via the Add-on's
-      interface.
-    </li>
-    <li>
-      <strong>Managing API Keys:</strong> Add, view (masked), update,
-      remove via the Add-on's interface.
-    </li>
-    <li>
-      <strong>Revoking Access:</strong> Via your Google Account settings
-      ([https://myaccount.google.com/permissions](https://myaccount.google.com/permissions)).
-    </li>
-    <li>
-      <strong>Uninstalling:</strong> Via Google Sheets Extensions/Add-ons
-      menu or the Marketplace.
-    </li>
-    <li><strong>Contacting me:</strong> See Section 11.</li>
-  </ul>
+        <h2>7. Data Retention</h2>
+        <ul>
+          <li>
+            <strong>Configuration Data (API Keys, Settings):</strong> Retained
+            in UserProperties (within Google's environment) while the Add-on is installed or until you clear
+            them. I recommend clearing keys before uninstalling.
+          </li>
+          <li>
+            <strong>Sheet/Drive Content:</strong> Processed transiently on Google's servers; not
+            retained by the Add-on itself. Residual data may exist in Google execution logs or third-party LLM logs
+            per their respective policies.
+          </li>
+        </ul>
 
-  <h2>9. Children's Privacy</h2>
-  <p>
-    The Add-on is not intended for use by children under the age of 13 (or
-    a higher age threshold applicable in your jurisdiction). I do not
-    knowingly collect personal information from children under this age.
-  </p>
+        <h2>8. Your Choices and Rights</h2>
+        <ul>
+          <li>
+            <strong>Accessing and Modifying Settings:</strong> Via the Add-on's
+            interface.
+          </li>
+          <li>
+            <strong>Managing API Keys:</strong> Add, view (masked), update,
+            remove via the Add-on's interface.
+          </li>
+          <li>
+            <strong>Revoking Access:</strong> Via your Google Account settings
+            ([https://myaccount.google.com/permissions](https://myaccount.google.com/permissions)).
+          </li>
+          <li>
+            <strong>Uninstalling:</strong> Via Google Sheets Extensions/Add-ons
+            menu or the Marketplace.
+          </li>
+          <li><strong>Contacting me:</strong> See Section 11.</li>
+        </ul>
 
-  <h2>10. Changes to This Privacy Policy</h2>
-  <p>
-    I may update this Privacy Policy. I will notify you by posting the
-    new policy. Changes are effective when posted. Continued use after
-    changes constitutes acceptance.
-  </p>
+        <h2>9. Children's Privacy</h2>
+        <p>
+          The Add-on is not intended for use by children under the age of 13 (or
+          a higher age threshold applicable in your jurisdiction). I do not
+          knowingly collect personal information from children under this age.
+        </p>
 
-  <h2>11. Contact me</h2>
-  <p>
-    If you have any questions or concerns about this Privacy Policy,
-    please contact me at:
-  </p>
-  <p><a href="mailto: ">albert.steenstrup@contextsheet.com</a></p>
+        <h2>10. Changes to This Privacy Policy</h2>
+        <p>
+          I may update this Privacy Policy. I will notify you by posting the
+          new policy. Changes are effective when posted. Continued use after
+          changes constitutes acceptance.
+        </p>
 
-</section>
-<!-- END: Privacy Policy Content -->
+        <h2>11. Contact me</h2>
+        <p>
+          If you have any questions or concerns about this Privacy Policy,
+          please contact me at:
+        </p>
+        <p><a href="mailto:albert.steenstrup@contextsheet.com">albert.steenstrup@contextsheet.com</a></p> <!-- * REPLACE EMAIL * -->
+
+      </section>
       <!-- END: Privacy Policy Content -->
+
+      <!-- START: Terms of Service Content -->
+      <section id="terms-content" class="hidden">
+          <h1>Terms of Service for Contextsheet</h1>
+          <p class="effective-date">Effective Date: April 27, 2025</p> <!-- * REPLACE DATE * -->
+
+          <h2>1. Acceptance of Terms</h2>
+          <p>
+              Welcome to Contextsheet (the "Service"), a Google Sheets Add-on provided by Albert Steenstrup ("me"). By installing, accessing, or using the Service, you ("User," "you," or "your") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not install or use the Service.
+          </p>
+          <p>
+              These Terms incorporate by reference our Privacy Policy, available at <a href="https://contextsheet.com/">https://contextsheet.com/</a>. <!-- * REPLACE URL * --> Please review the Privacy Policy carefully.
+          </p>
+
+          <h2>2. Service Description</h2>
+          <p>
+              Contextsheet is a Google Sheets Add-on designed to enhance spreadsheet analysis by leveraging external Large Language Models (LLMs) like Google Gemini, Anthropic Claude, and OpenAI ChatGPT. The Service allows users to:
+          </p>
+          <ul>
+              <li>Provide a Google Drive file or folder URL as context.</li>
+              <li>Select cells within their Google Sheet.</li>
+              <li>Submit queries about the selected cells, optionally using the provided Drive context.</li>
+              <li>Send the query, selected cell data (if any), and relevant context snippets (extracted by our backend process from the provided Drive URL) to a selected LLM via the User's own API key.</li>
+              <li>Receive generated responses from the LLM.</li>
+              <li>Insert these responses, and optionally context snippets or source document links, back into their Google Sheet.</li>
+              <li>Configure settings such as LLM selection, API key management, result display preferences, and context retrieval parameters.</li>
+          </ul>
+          <p>
+              The Service acts as an intermediary, facilitating communication between your Google Sheet, Google Drive (for context retrieval), and the external LLM APIs you configure.
+          </p>
+
+          <h2>3. User Accounts and API Keys</h2>
+          <p>
+              <strong>3.1. Google Account:</strong> You must have a valid Google account to use Google Sheets and install the Service.
+          </p>
+          <p>
+              <strong>3.2. LLM API Keys:</strong> To use the core functionality of the Service involving external LLMs (Gemini, Claude, ChatGPT), you MUST provide your own valid API key(s) for the respective service(s) you wish to use.
+          </p>
+          <p>
+              <strong>3.3. API Key Storage:</strong> You are responsible for obtaining these API keys directly from the providers (Google AI Studio, Anthropic, OpenAI Platform). When you enter an API key into the Service's settings, it is stored securely using Google Apps Script's `PropertiesService.getUserProperties()`. This service stores data specific to your Google account within the context of this script/add-on. I, the developers of Contextsheet, do not have direct access to view or retrieve your stored API keys.
+          </p>
+          <p>
+              <strong>3.4. User Responsibility for Keys and Usage:</strong> You are solely responsible for:
+              <ul>
+                  <li>The security and confidentiality of your API keys.</li>
+                  <li>All activities that occur under your API keys, including any usage costs charged by the LLM providers (Google, Anthropic, OpenAI). I are not responsible for any charges incurred through your use of these third-party services.</li>
+                  <li>Complying with the terms of service, usage policies, and pricing of the respective LLM API providers.</li>
+              </ul>
+          </p>
+
+          <h2>4. Use of the Service</h2>
+          <p>
+              <strong>4.1. License:</strong> Subject to your compliance with these Terms, I grant you a limited, non-exclusive, non-transferable, revocable license to use the Service for your internal personal or business purposes within Google Sheets.
+          </p>
+          <p>
+              <strong>4.2. User Conduct:</strong> You agree not to use the Service:
+              <ul>
+                  <li>For any unlawful purpose or in violation of any applicable laws or regulations.</li>
+                  <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others (including Google and the LLM providers).</li>
+                  <li>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate based on gender, sexual orientation, religion, ethnicity, race, age, national origin, or disability.</li>
+                  <li>To submit false or misleading information.</li>
+                  <li>To transmit viruses or any other type of malicious code.</li>
+                  <li>To collect or track the personal information of others without consent.</li>
+                  <li>To spam, phish, pharm, pretext, spider, crawl, or scrape.</li>
+                  <li>To interfere with or circumvent the security features of the Service, Google Sheets, Google Drive, or the third-party LLM APIs.</li>
+                  <li>To reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code of the Service.</li>
+              </ul>
+          </p>
+          <p>
+              <strong>4.3. Input Data:</strong> You are responsible for the accuracy, legality, and appropriateness of any data you select in your Google Sheet or provide as a query to the Service.
+          </p>
+          <p>
+              <strong>4.4. Google Drive Context:</strong> When you provide a Google Drive URL, you grant the Service permission, operating under your Google account's authority, to access the content of that file or the files within that folder for the sole purpose of extracting relevant text snippets to be used as context for the LLM API calls you initiate. The Service does not store this Drive content persistently. Access is performed via standard Google APIs authorized by you.
+          </p>
+
+          <h2>5. Data Privacy and Security</h2>
+          <p>
+              Our collection and use of information are described in our Privacy Policy (<a href="[Your Website URL]/privacy">[Your Website URL]/privacy</a>). <!-- * REPLACE URL * --> Key points relevant to these Terms include:
+          </p>
+          <p>
+              <strong>5.1. Data Processed:</strong> When you use the Service, the following data is processed temporarily by the Apps Script backend running under your authority:
+              <ul>
+                  <li>The text content of the cells you select in your Google Sheet.</li>
+                  <li>The query text you enter.</li>
+                  <li>The Google Drive URL you provide.</li>
+                  <li>Text content extracted from the file(s) referenced by the Drive URL (only for context generation).</li>
+                  <li>Your configured preferences (LLM choice, toggles, etc.).</li>
+              </ul>
+              This data, along with relevant context snippets, is sent to the external LLM API you have selected using your API key.
+          </p>
+          <p>
+              <strong>5.2. Data Storage:</strong> The Service uses Google Apps Script's `PropertiesService.getUserProperties()` to store:
+              <ul>
+                  <li>Your encrypted or obfuscated LLM API keys (as described in Section 3.3).</li>
+                  <li>Your selected preferences (LLM model, Drive URL, toggle settings, slider values).</li>
+              </ul>
+              This data is associated with your Google account and the script instance. I do not store your query history, sheet content, or Drive context content on our own servers.
+          </p>
+          <p>
+              <strong>5.3. External LLM Processing:</strong> Data sent to external LLM providers (Google Gemini, Anthropic Claude, OpenAI ChatGPT) is subject to their respective terms of service and privacy policies. I are not responsible for how these third parties handle your data. You should review their policies before using their services via Contextsheet.
+          </p>
+          <p>
+              <strong>5.4. Google User Data Compliance:</strong> I access Google User Data (Sheet content, Drive content via API) only as necessary to provide the Service's functionality initiated by you. Our use complies with the Google API Services User Data Policy, including the Limited Use requirements. I do not use your data for advertising, transfer it unnecessarily, or allow humans to read it unless required for security purposes, legal compliance, or with your explicit consent for support.
+          </p>
+          <p>
+              <strong>5.5. Security:</strong> I rely on the security infrastructure provided by Google Cloud Platform and Google Workspace. Data transmission between your browser, Google's servers (running Apps Script), and the external LLM APIs uses standard HTTPS encryption. However, no method of transmission or storage is 100% secure.
+          </p>
+
+          <h2>6. Third-Party Services (LLMs)</h2>
+          <p>
+              The Service relies on third-party LLM APIs (Google Gemini, Anthropic Claude, OpenAI ChatGPT). Your use of these APIs through the Service is subject to the terms, conditions, privacy policies, and usage costs of those respective providers.
+          </p>
+          <p>
+              I do not control and are not responsible for:
+              <ul>
+                  <li>The availability, performance, or accuracy of the third-party LLM APIs.</li>
+                  <li>The content or quality of the responses generated by the LLMs.</li>
+                  <li>Any changes made by the providers to their services, terms, or pricing.</li>
+                  <li>Any costs incurred through your use of these APIs.</li>
+              </ul>
+          </p>
+          <p>
+              You agree to comply with all applicable terms and policies of the third-party LLM providers when using the Service.
+          </p>
+
+          <h2>7. Intellectual Property</h2>
+          <p>
+              <strong>7.1. Service Ownership:</strong> I own all rights, title, and interest in and to the Service, including its software, code, user interface, design, and documentation, and all associated intellectual property rights.
+          </p>
+          <p>
+              <strong>7.2. User Data:</strong> You retain ownership of the data contained within your Google Sheets and Google Drive files.
+          </p>
+          <p>
+              <strong>7.3. Generated Content:</strong> Ownership of the content generated by the third-party LLMs is typically governed by the terms of the respective LLM provider.
+          </p>
+          <p>
+              <strong>7.4. Feedback:</strong> If you provide me with feedback, suggestions, or ideas regarding the Service, you grant me a perpetual, irrevocable, worldwide, royalty-free license to use, modify, and incorporate such feedback into the Service without any obligation to you.
+          </p>
+
+          <h2>8. Disclaimers</h2>
+          <p>
+              THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+          </p>
+          <p>
+              I DO NOT WARRANT THAT: (A) THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE; (B) THE RESULTS OBTAINED FROM THE USE OF THE SERVICE (INCLUDING LLM RESPONSES) WILL BE ACCURATE, RELIABLE, OR COMPLETE; (C) THE QUALITY OF ANY PRODUCTS, SERVICES, INFORMATION, OR OTHER MATERIAL OBTAINED BY YOU THROUGH THE SERVICE WILL MEET YOUR EXPECTATIONS; OR (D) ANY ERRORS IN THE SERVICE WILL BE CORRECTED.
+          </p>
+          <p>
+              RESPONSES FROM LLMS CAN BE INACCURATE, INCOMPLETE, OR BIASED. YOU ARE SOLELY RESPONSIBLE FOR EVALUATING THE ACCURACY AND APPROPRIATENESS OF ANY INFORMATION PROVIDED BY THE SERVICE AND THE UNDERLYING LLMS.
+          </p>
+
+          <h2>9. Limitation of Liability</h2>
+          <p>
+              TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL [Your Company/Your Name], ITS AFFILIATES, DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:
+              (A) YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE THE SERVICE;
+              (B) ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE SERVICE, INCLUDING WITHOUT LIMITATION, ANY DEFAMATORY, OFFENSIVE, OR ILLEGAL CONDUCT OF OTHER USERS OR THIRD PARTIES (INCLUDING LLM PROVIDERS);
+              (C) ANY CONTENT OBTAINED FROM THE SERVICE (INCLUDING LLM RESPONSES); OR
+              (D) UNAUTHORIZED ACCESS, USE, OR ALTERATION OF YOUR TRANSMISSIONS OR CONTENT (INCLUDING API KEYS STORED IN USER PROPERTIES IF YOUR GOOGLE ACCOUNT IS COMPROMISED).
+          </p>
+          <p>
+              IN NO EVENT SHALL THE AGGREGATE LIABILITY OF [Your Company/Your Name] EXCEED THE GREATER OF ONE HUNDRED U.S. DOLLARS (USD $100.00) OR THE AMOUNT YOU PAID me, IF ANY, IN THE PAST SIX MONTHS FOR THE SERVICE GIVING RISE TO THE CLAIM.
+          </p>
+
+          <h2>10. Indemnification</h2>
+          <p>
+              You agree to defend, indemnify, and hold harmless [Your Company/Your Name] and its affiliates, directors, officers, employees, and agents from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees) arising from: (i) your use of and access to the Service; (ii) your violation of any term of these Terms; (iii) your violation of any third-party right, including without limitation any copyright, property, or privacy right, or the terms of service of any third-party LLM provider; or (iv) any claim that your data or use of the Service caused damage to a third party.
+          </p>
+
+          <h2>11. Termination</h2>
+          <p>
+              <strong>11.1. By You:</strong> You may stop using the Service at any time by uninstalling the Google Sheets Add-on.
+          </p>
+          <p>
+              <strong>11.2. By me:</strong> I reserve the right to suspend or terminate your access to the Service at any time, with or without cause or notice, for any reason, including, but not limited to, a breach of these Terms. I may also modify or discontinue the Service at any time without prior notice.
+          </p>
+          <p>
+              <strong>11.3. Effect of Termination:</strong> Upon termination, your license to use the Service ceases. Data stored in your User Properties (API keys, preferences) will remain associated with your account unless you manually remove the keys via the settings or I are required to delete data under applicable law or our Privacy Policy. I are not liable for any loss or damage resulting from termination or discontinuation of the Service.
+          </p>
+
+          <h2>12. Changes to Terms</h2>
+          <p>
+              I reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, I will make reasonable efforts to provide notice prior to any new terms taking effect (e.g., via a notice on our website, within the Add-on, or by email if I have collected it according to our Privacy Policy). What constitutes a material change will be determined at our sole discretion.
+          </p>
+          <p>
+              By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.
+          </p>
+
+          <h2>13. Governing Law</h2>
+          <p>
+              These Terms shall be governed and construed in accordance with the laws of [Jurisdiction, e.g., the State of California, United States], <!-- * REPLACE JURISDICTION * --> without regard to its conflict of law provisions.
+          </p>
+
+          <h2>14. Miscellaneous</h2>
+          <p>
+              <strong>14.1. Entire Agreement:</strong> These Terms and our Privacy Policy constitute the entire agreement between you and me regarding our Service and supersede and replace any prior agreements I might have between me regarding the Service.
+          </p>
+          <p>
+              <strong>14.2. Severability:</strong> If any provision of these Terms is held to be invalid or unenforceable, the remaining provisions of these Terms will remain in effect.
+          </p>
+          <p>
+              <strong>14.3. Waiver:</strong> Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.
+          </p>
+
+          <h2>15. Contact Information</h2>
+          <div class="contact-info">
+              <p>If you have any questions about these Terms, please contact me at: <a href="mailto:[Your Contact Email]">[Your Contact Email]</a></p> <!-- * REPLACE EMAIL * -->
+              <p>[Your Company/Your Name]</p> <!-- * REPLACE NAME/COMPANY * -->
+              <p>[Your Address, if applicable]</p> <!-- * REPLACE ADDRESS OR REMOVE * -->
+              <p>Website: <a href="[Your Website URL]">[Your Website URL]</a></p> <!-- * REPLACE URL * -->
+          </div>
+      </section>
+      <!-- END: Terms of Service Content -->
+
     </main>
 
     <footer>
       © <span id="copyright-year"></span> Contextsheet | All rights reserved. |
       <a
-        href="#"
+      href="https://www.contextsheet.com/terms"
+      id="nav-terms"
+      >Terms of Service</a
+    > <!-- Added Terms Link -->
+      |
+      <a
+        href="https://www.contextsheet.com/privacy-policy"
         id="nav-privacy"
-        onclick="showPage('privacy-content'); return false;"
         >Privacy Policy</a
       >
-      <!-- Added this link with onclick -->
+
       <br />
       Google Sheets™ and Google Drive™ are trademarks of Google LLC. This site
       is not affiliated with or endorsed by Google.
     </footer>
 
     <script>
-      // Simple SPA Logic (Mostly unchanged, removed slideshow parts)
-      const pages = ["home-content", "about-content", "privacy-content"];
-      const navLinks = document.querySelectorAll(".nav-link"); // Assuming class '.nav-link' is kept on nav items
+      // Simple SPA Logic
+      const pages = ["home-content", "about-content", "privacy-content", "terms-content"]; // Added terms-content
+      const navLinks = document.querySelectorAll(".nav-link");
 
       function showPage(pageIdToShow) {
         pages.forEach((pageId) => {
@@ -1836,10 +1639,10 @@
           targetPage.classList.remove("hidden");
         }
 
-        // Update active nav link
+        // Update active nav link in header
         navLinks.forEach((link) => {
           link.classList.remove("active");
-          // More robust check based on the target page ID
+          // Match based on the start of the page ID ('home', 'about')
           if (link.id === `nav-${pageIdToShow.split("-")[0]}`) {
             link.classList.add("active");
           }
@@ -1854,134 +1657,25 @@
         yearSpan.textContent = new Date().getFullYear();
       }
 
-      // Initial setup: Show the home page by default
+      // Initial setup: Show appropriate page based on hash or default to home
       document.addEventListener("DOMContentLoaded", () => {
-        showPage("home-content");
-        // Add any other initialization if needed
+        const hash = window.location.hash.substring(1); // Remove the # symbol
+        if (hash && pages.includes(hash)) {
+          showPage(hash);
+        } else {
+          showPage("home-content");
+        }
       });
 
-      // Re-add event listeners for nav links if needed (or ensure onclick works)
-      // Example:
-      // document.getElementById('nav-home').addEventListener('click', (e) => { e.preventDefault(); showPage('home-content'); });
-      // document.getElementById('nav-about').addEventListener('click', (e) => { e.preventDefault(); showPage('about-content'); });
-      // The onclick attributes in the HTML should suffice here.
-
-      // --- Media Carousel Logic (Now targets videos) ---
-      const videoCarouselContainer = document.querySelector(
-        ".video-carousel-container"
-      );
-      const videoTrack = videoCarouselContainer?.querySelector(".video-track");
-      const videoCaption = document.querySelector(
-        ".video-showcase .caption.video-caption"
-      ); // Get the caption element
-      const videoElements = videoCarouselContainer?.querySelectorAll(
-        ".video-carousel-item"
-      );
-      let currentIndex = 0;
-
-      if (videoCarouselContainer && videoTrack) {
-        const items = videoTrack.querySelectorAll(".media-item"); // Select items within the track
-        const prevBtn = videoCarouselContainer.querySelector(".prev-btn"); // Look within the container
-        const nextBtn = videoCarouselContainer.querySelector(".next-btn"); // Look within the container
-
-        // Function to show a specific video
-        function showItem(index) {
-          if (!items || items.length === 0) return;
-
-          // Pause all videos
-          items.forEach((item) => {
-            const video = item.querySelector("video");
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-            }
-          });
-
-          // Remove active class from all items
-          items.forEach((item) => item.classList.remove("active"));
-
-          // Add active class to the target item
-          items[index].classList.add("active");
-
-          // Play the current video
-          const currentVideo = items[index].querySelector("video");
-          if (currentVideo) {
-            // Ensure video is set to play
-            currentVideo.autoplay = true;
-            const playPromise = currentVideo.play();
-
-            // Handle play promise to prevent errors
-            if (playPromise !== undefined) {
-              playPromise.catch((error) => {
-                console.log("Autoplay was prevented:", error);
-                // Add a play button or other fallback here if needed
-              });
-            }
-
-            // Update the caption
-            if (videoCaption) {
-              videoCaption.textContent =
-                currentVideo.dataset.caption || "Video";
-            }
-          }
+      // Handle hash changes
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash && pages.includes(hash)) {
+          showPage(hash);
         }
+      });
 
-        function nextItem() {
-          currentIndex = (currentIndex + 1) % items.length;
-          showItem(currentIndex);
-        }
-
-        function prevItem() {
-          currentIndex = (currentIndex - 1 + items.length) % items.length;
-          showItem(currentIndex);
-        }
-
-        // Event Listeners for buttons
-        if (prevBtn && items.length > 1) {
-          prevBtn.addEventListener("click", prevItem);
-        }
-
-        if (nextBtn && items.length > 1) {
-          nextBtn.addEventListener("click", nextItem);
-        }
-
-        // Add event listeners to videos to move to next when ended
-        items.forEach((item, index) => {
-          const video = item.querySelector("video");
-          if (video) {
-            video.addEventListener("ended", () => {
-              // Move to next video when current one ends
-              nextItem();
-            });
-          }
-        });
-
-        // Initialize
-        showItem(currentIndex); // Show initial item
-      }
-      // --- End Video Carousel Logic ---
-
-      // --- About Me Carousel Logic ---
-      const aboutMeCarousel = document.querySelector(".about-me-carousel");
-      if (aboutMeCarousel) {
-        const aboutMeItems = aboutMeCarousel.querySelectorAll(".carousel-item");
-        let aboutMeCurrentIndex = 0;
-        const aboutMeInterval = 4000; // 4 seconds
-
-        function showNextAboutMeItem() {
-          aboutMeItems[aboutMeCurrentIndex].classList.remove("active");
-          aboutMeCurrentIndex = (aboutMeCurrentIndex + 1) % aboutMeItems.length;
-          aboutMeItems[aboutMeCurrentIndex].classList.add("active");
-        }
-
-        // Start the carousel if there are items
-        if (aboutMeItems.length > 1) {
-          setInterval(showNextAboutMeItem, aboutMeInterval);
-        }
-      }
-      // --- End About Me Carousel Logic ---
-
-      // Replace the existing onclick attribute in your About link with an event listener
+      // Navigation listeners
       document.addEventListener("DOMContentLoaded", function () {
         document
           .getElementById("nav-home")
@@ -1996,60 +1690,144 @@
             e.preventDefault();
             showPage("about-content");
           });
+
+        // Footer links handled by onclick attributes in HTML
       });
 
-      // Video Switching Logic
-      document.addEventListener("DOMContentLoaded", function () {
-        const mainVideo = document.getElementById("main-video");
-        const videoSource = document.getElementById("video-source");
-        const prevBtn = document.querySelector(".video-btn.prev-btn");
-        const nextBtn = document.querySelector(".video-btn.next-btn");
-        const videoCaption = document.querySelector(".video-caption");
 
-        // Define videos and their captions
-        const videos = [
-          { src: "images/demo.mp4", caption: "Demo Video" },
-          { src: "images/dpa.mp4", caption: "Use case 1: Data privacy" },
-          { src: "images/hr.mp4", caption: "Use case 2: HR contracts" },
-        ];
+      // --- Video Carousel Logic ---
+      const videoCarouselContainer = document.querySelector(".video-carousel-container");
+      if (videoCarouselContainer) { // Check if container exists
+          const videoTrack = videoCarouselContainer.querySelector(".video-track");
+          const videoCaption = document.querySelector(".video-showcase .caption.video-caption");
+          const videoElements = videoCarouselContainer.querySelectorAll(".video-carousel-item"); // Correct selector needed if structure changed
+          let currentIndex = 0;
 
-        let currentVideoIndex = 0;
+          if (videoTrack) { // Check if track exists
+              const items = videoTrack.querySelectorAll(".media-item");
+              const prevBtn = videoCarouselContainer.querySelector(".prev-btn");
+              const nextBtn = videoCarouselContainer.querySelector(".next-btn");
 
-        // Function to update video source and caption
-        function updateVideo(index) {
-          // Pause current video
-          mainVideo.pause();
+              function showItem(index) {
+                  if (!items || items.length === 0 || index < 0 || index >= items.length) return;
 
-          // Update source
-          videoSource.src = videos[index].src;
+                  items.forEach(item => {
+                      const video = item.querySelector("video");
+                      if (video) { video.pause(); video.currentTime = 0; }
+                      item.classList.remove("active");
+                  });
 
-          // Update caption
-          videoCaption.textContent = videos[index].caption;
+                  items[index].classList.add("active");
+                  const currentVideo = items[index].querySelector("video");
+                  if (currentVideo) {
+                      currentVideo.autoplay = true;
+                      const playPromise = currentVideo.play();
+                      if (playPromise !== undefined) {
+                          playPromise.catch(error => console.log("Autoplay was prevented:", error));
+                      }
+                      if (videoCaption) {
+                          videoCaption.textContent = currentVideo.dataset.caption || "Video";
+                      }
+                  }
+              }
 
-          // Load and play new video
-          mainVideo.load();
-          mainVideo.play();
+              function nextItem() {
+                  if (!items || items.length === 0) return;
+                  currentIndex = (currentIndex + 1) % items.length;
+                  showItem(currentIndex);
+              }
+
+              function prevItem() {
+                   if (!items || items.length === 0) return;
+                  currentIndex = (currentIndex - 1 + items.length) % items.length;
+                  showItem(currentIndex);
+              }
+
+              if (prevBtn && items.length > 1) prevBtn.addEventListener("click", prevItem);
+              if (nextBtn && items.length > 1) nextBtn.addEventListener("click", nextItem);
+
+              items.forEach((item) => {
+                  const video = item.querySelector("video");
+                  if (video) video.addEventListener("ended", nextItem);
+              });
+
+              if (items.length > 0) showItem(currentIndex); // Initialize
+          }
+      }
+
+      // --- About Me Carousel Logic ---
+      const aboutMeCarousel = document.querySelector(".about-me-carousel");
+      if (aboutMeCarousel) {
+        const aboutMeItems = aboutMeCarousel.querySelectorAll(".carousel-item");
+        let aboutMeCurrentIndex = 0;
+        const aboutMeInterval = 4000; // 4 seconds
+
+        function showNextAboutMeItem() {
+          if (aboutMeItems.length <= 1) return; // Don't run if only one item
+          aboutMeItems[aboutMeCurrentIndex].classList.remove("active");
+          aboutMeCurrentIndex = (aboutMeCurrentIndex + 1) % aboutMeItems.length;
+          aboutMeItems[aboutMeCurrentIndex].classList.add("active");
         }
 
-        // Handle next button click
-        nextBtn.addEventListener("click", function () {
-          currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-          updateVideo(currentVideoIndex);
-        });
+        if (aboutMeItems.length > 1) {
+          setInterval(showNextAboutMeItem, aboutMeInterval);
+        }
+      }
 
-        // Handle previous button click
-        prevBtn.addEventListener("click", function () {
-          currentVideoIndex =
-            (currentVideoIndex - 1 + videos.length) % videos.length;
-          updateVideo(currentVideoIndex);
-        });
+      // --- Simple Video Player Logic ---
+      document.addEventListener('DOMContentLoaded', function() {
+          const mainVideo = document.getElementById('main-video');
+          const videoSource = document.getElementById('video-source');
+          const prevBtn = document.querySelector('.video-btn.prev-btn');
+          const nextBtn = document.querySelector('.video-btn.next-btn');
+          const videoCaption = document.querySelector('.video-caption');
 
-        // Handle video end - go to next video
-        mainVideo.addEventListener("ended", function () {
-          currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-          updateVideo(currentVideoIndex);
-        });
+          // Check if all elements exist before adding listeners
+          if (!mainVideo || !videoSource || !prevBtn || !nextBtn || !videoCaption) {
+              console.log("One or more video player elements not found. Skipping video logic.");
+              return; // Exit if elements are missing
+          }
+
+          const videos = [
+              { src: "images/demo.mp4", caption: "Demo Video" },
+              { src: "images/dpa.mp4", caption: "Use case 1: Data privacy" },
+              { src: "images/hr.mp4", caption: "Use case 2: HR contracts" }
+          ];
+          let currentVideoIndex = 0;
+
+          function updateVideo(index) {
+              if (index < 0 || index >= videos.length) return; // Index check
+              mainVideo.pause();
+              videoSource.src = videos[index].src;
+              videoCaption.textContent = videos[index].caption;
+              mainVideo.load();
+              const playPromise = mainVideo.play();
+              if (playPromise !== undefined) {
+                  playPromise.catch(error => console.log("Play error:", error));
+              }
+          }
+
+          nextBtn.addEventListener('click', function() {
+              currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+              updateVideo(currentVideoIndex);
+          });
+
+          prevBtn.addEventListener('click', function() {
+              currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+              updateVideo(currentVideoIndex);
+          });
+
+          mainVideo.addEventListener('ended', function() {
+              currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+              updateVideo(currentVideoIndex);
+          });
+
+          // Initialize first video (if videos array is not empty)
+          if (videos.length > 0) {
+             updateVideo(currentVideoIndex);
+          }
       });
+
     </script>
   </body>
 </html>
