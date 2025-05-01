@@ -1231,6 +1231,11 @@
             script execution issues within Google's infrastructure.
           </li>
         </ul>
+        <!-- ADDED PARAGRAPH START -->
+        <p>
+          <strong>AI/ML Model Training:</strong> Contextsheet <strong>does not</strong> retain or use any Google user data obtained through Google Workspace APIs (such as Google Sheet content or Google Drive content accessed via the Add-on) to develop, improve, or train my own generalized/non-personalized artificial intelligence (AI) and/or machine learning (ML) models. My use of Google user data is strictly limited to providing the core functionality of the Add-on as described in this policy.
+        </p>
+        <!-- ADDED PARAGRAPH END -->
 
         <h2>4. Third-Party Services and Data Sharing</h2>
         <p>
@@ -1292,6 +1297,11 @@
           also subject to their respective privacy policies and terms of
           service. I encourage you to review them.
         </p>
+        <!-- ADDED PARAGRAPH START -->
+        <p>
+          Contextsheet does not use the Google user data (Google Sheet content, Google Drive content, user queries) transferred to these third-party LLM providers for the development, improvement, or training of Contextsheet's own generalized/non-personalized AI or ML models. The transfer of this data to the selected LLM provider is solely to enable the LLM to generate a response to your specific query based on the context you provide. I explicitly affirm that such transfers to third-party AI tools are not intended for developing generalized/non-personalized AI/ML models by Contextsheet or for Contextsheet's benefit, and are subject to the terms and privacy policies of the respective third-party LLM provider.
+        </p>
+        <!-- ADDED PARAGRAPH END -->
         <p>
           Other than the interactions described above, I do not share your
           information with any other third parties. Your data stays within Google's environment or goes directly to the LLM endpoint you select.
@@ -1319,7 +1329,7 @@
         <ul>
           <li>
             <strong>Configuration Data:</strong> Stored in UserProperties linked
-            to your Google Account within Google's environment.
+            to your Google Account within Google's environment. (This storage is secured by Google's infrastructure).
           </li>
           <li>
             <strong>Processing Data:</strong> Sheet/Drive content is processed
@@ -1328,8 +1338,13 @@
           </li>
           <li>
             <strong>Transmission:</strong> All communication between your browser and Google's Apps Script servers, and between Apps Script servers and third-party APIs, occurs over
-            encrypted HTTPS.
+            encrypted HTTPS. 
           </li>
+          <li>
+            <!-- ADDED BULLET START -->
+           <strong>Data Protection Mechanisms:</strong> I rely on Google Cloud's inherent security measures for data processed and stored within their infrastructure (Apps Script execution, UserProperties storage). Sensitive data like API Keys are stored using Google's secure UserProperties service, scoped only to the user and the script. Data in transit is protected using HTTPS encryption. I do not operate external servers for processing or storing core user data accessed via Workspace APIs.
+           <!-- ADDED BULLET END -->
+         </li>
           <li>
             <strong>Infrastructure:</strong> The Add-on, including its backend script (`Code.gs`), runs entirely within Google's secure Cloud infrastructure. No external servers controlled by me are used for data processing or storage.
           </li>
@@ -1495,7 +1510,7 @@
               <strong>5.3. External LLM Processing:</strong> Data sent to external LLM providers (Google Gemini, Anthropic Claude, OpenAI ChatGPT) is subject to their respective terms of service and privacy policies. I are not responsible for how these third parties handle your data. You should review their policies before using their services via Contextsheet.
           </p>
           <p>
-            <strong>5.4. Google User Data Compliance (Limited Use):</strong> Contextsheet accesses user-selected Google Sheet content and user-linked Google Drive content solely to provide its intended functionality upon user request. This use adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including Limited Use requirements. We do not use this data for advertising. Data is only transferred when necessary for core functionality (e.g., to selected LLM APIs). Human reading of data is prohibited except for security, legal compliance, or with explicit user consent for support.
+            <strong>5.4. Google User Data Compliance (Limited Use):</strong> Contextsheet accesses user-selected Google Sheet content and user-linked Google Drive content solely to provide its intended functionality upon user request. This use adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including Limited Use requirements. I do not use this data for advertising. Data is only transferred when necessary for core functionality (e.g., to selected LLM APIs). Human reading of data is prohibited except for security, legal compliance, or with explicit user consent for support.
           </p>
           <p>
               <strong>5.5. Security:</strong> I rely on the security infrastructure provided by Google Cloud Platform and Google Workspace. Data transmission between your browser, Google's servers (running Apps Script), and the external LLM APIs uses standard HTTPS encryption. However, no method of transmission or storage is 100% secure.
